@@ -86,6 +86,16 @@
       
         <h2 id="安装环境"><a href="#安装环境" class="headerlink" title="安装环境"></a>安装环境</h2><h3 id="安装git"><a href="#安装git" class="headerlink" title="安装git"></a>安装git</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install git</span><br></pre></td></tr></table></figure>
 <p>查看是否安装成功<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git version</span><br></pre></td></tr></table></figure></p>
+<h3 id="设置git账号"><a href="#设置git账号" class="headerlink" title="设置git账号"></a>设置git账号</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global user.name <span class="string">"leego86"</span></span><br><span class="line">$ git config --global user.email <span class="string">"leego8697@gmail.com"</span></span><br></pre></td></tr></table></figure>
+<h3 id="设置ssh密钥"><a href="#设置ssh密钥" class="headerlink" title="设置ssh密钥"></a>设置ssh密钥</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C leego8697@gmail.com</span><br></pre></td></tr></table></figure>
+<p>回车三次在.ssh下会生成id_rsa和id_rsa.pub两个文件<br>进入ssh目录<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> ~/.ssh</span><br></pre></td></tr></table></figure></p>
+<hr>
+<p>不缺的是不是必需<br>添加密钥到ssh-agent<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">eval</span> <span class="string">"<span class="variable">$(ssh-agent -s)</span>"</span></span><br></pre></td></tr></table></figure></p>
+<p>添加生成的ssh key到ssh-agent<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-add ~/.ssh/id_rsa</span><br></pre></td></tr></table></figure></p>
+<hr>
+<p>###配置github ssh<br>登录github 进入settings SSH and GPG keys<br>点击 New ssh key<br>title自定义<br>key 复制id_rsa.pub内的值，然后保存</p>
+<p>检测是否配置成功<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br></pre></td></tr></table></figure></p>
+<p>如果看到Hi后面是用户名，说明配置成功</p>
 <h3 id="安装nodejs"><a href="#安装nodejs" class="headerlink" title="安装nodejs"></a>安装nodejs</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install nodejs</span><br></pre></td></tr></table></figure>
 <p>查看版本</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ node -v</span><br></pre></td></tr></table></figure>
@@ -98,12 +108,12 @@
 <p>或者<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ hexo init blog</span><br><span class="line">$ <span class="built_in">cd</span> blog</span><br><span class="line">$ npm install</span><br></pre></td></tr></table></figure></p>
 <h3 id="配置账号"><a href="#配置账号" class="headerlink" title="配置账号"></a>配置账号</h3><p>编辑_config.yml<br>deploy:<br>  type: git<br>  repo: <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:username/username.github.io.git<br>  branch: master</p>
 <p>  冒号后有空格 </p>
-<p>##<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ hexo n <span class="built_in">test</span>  </span><br><span class="line">$ hexo g</span><br><span class="line">$ hexo s</span><br><span class="line">$ hexo d</span><br></pre></td></tr></table></figure></p>
+<p>##<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ hexo n <span class="built_in">test</span> 新建一个文章</span><br><span class="line">$ hexo g    生成文章</span><br><span class="line">$ hexo s    本地部署</span><br><span class="line">$ hexo d    发布到github</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/07/13/Hello-Hexo/" data-id="cjjlj7tnv00006sl40ni8qvlj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/07/13/Hello-Hexo/" data-id="cjjlkoes00000zcl4gt9d295k" class="article-share-link">Share</a>
       
       
     </footer>
@@ -148,7 +158,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/07/13/hello-world/" data-id="cjjlj7toe00016sl4c3v7bly8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/07/13/hello-world/" data-id="cjjlkoesk0001zcl4rm84fugm" class="article-share-link">Share</a>
       
       
     </footer>
