@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="安装环境安装git1$ sudo apt-get install git 查看是否安装成功1$ git version 设置git账号12$ git config --global user.name &quot;leego86&quot;$ git config --global user.email &quot;leego8697@gmail.com&quot; 设置ssh密钥1$ ssh-keygen -t rsa -C leeg">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-07-14T15:37:37.395Z">
+<meta property="og:updated_time" content="2018-07-14T15:52:14.723Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo 安装和使用">
 <meta name="twitter:description" content="安装环境安装git1$ sudo apt-get install git 查看是否安装成功1$ git version 设置git账号12$ git config --global user.name &quot;leego86&quot;$ git config --global user.email &quot;leego8697@gmail.com&quot; 设置ssh密钥1$ ssh-keygen -t rsa -C leeg">
@@ -109,14 +109,14 @@
 <p> 初始化<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> blog</span><br><span class="line">hexo init</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure></p>
 <p>或者<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ hexo init blog</span><br><span class="line">$ <span class="built_in">cd</span> blog</span><br><span class="line">$ npm install</span><br></pre></td></tr></table></figure></p>
 <h3 id="配置账号"><a href="#配置账号" class="headerlink" title="配置账号"></a>配置账号</h3><p>编辑_config.yml<br>deploy:<br>  type: git<br>  repo: <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:username/username.github.io.git<br>  branch: master</p>
-<p>  冒号后有空格 </p>
+<p>  注：<br>  1 冒号后有空格<br>  2 如果repo直接复制<a href="https://github.com/leego86/leego86.github.io.git" target="_blank" rel="noopener">https://github.com/leego86/leego86.github.io.git</a><br>  每次发布需要输入账号密码</p>
 <p>##<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ hexo n <span class="built_in">test</span> 新建一个文章</span><br><span class="line">$ hexo g    生成文章</span><br><span class="line">$ hexo s    本地部署</span><br><span class="line">$ hexo d    发布到github</span><br></pre></td></tr></table></figure></p>
 <p>如果发布提示nothing to commit, working tree clean 需要执行hexo clean 然后再执行hexo d</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/07/13/Hello-Hexo/" data-id="cjjll714c0000aul4gaj45ly4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/07/13/Hello-Hexo/" data-id="cjjllayre0000e3l4awk16dhj" class="article-share-link">Share</a>
       
       
     </footer>
