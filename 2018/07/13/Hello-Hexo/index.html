@@ -5,16 +5,19 @@
   
 
   
-  <title>Hello,Hexo | Hexo</title>
+  <title>Hexo 安装和使用 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
-<meta property="og:title" content="Hello,Hexo">
+  <meta name="description" content="安装环境安装git1$ sudo apt-get install git 查看是否安装成功1$ git version 安装nodejs1$ sudo apt-get install nodejs 查看版本 1$ node -v 安装npm1$ sudo apt-get install npm 查看是否功1$ npm -v 安装hexo1$ npm install -g hexo-cli 查看安装">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo 安装和使用">
 <meta property="og:url" content="http://yoursite.com/2018/07/13/Hello-Hexo/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="安装环境安装git1$ sudo apt-get install git 查看是否安装成功1$ git version 安装nodejs1$ sudo apt-get install nodejs 查看版本 1$ node -v 安装npm1$ sudo apt-get install npm 查看是否功1$ npm -v 安装hexo1$ npm install -g hexo-cli 查看安装">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-07-13T15:25:36.231Z">
+<meta property="og:updated_time" content="2018-07-14T14:57:58.565Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello,Hexo">
+<meta name="twitter:title" content="Hexo 安装和使用">
+<meta name="twitter:description" content="安装环境安装git1$ sudo apt-get install git 查看是否安装成功1$ git version 安装nodejs1$ sudo apt-get install nodejs 查看版本 1$ node -v 安装npm1$ sudo apt-get install npm 查看是否功1$ npm -v 安装hexo1$ npm install -g hexo-cli 查看安装">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -75,7 +78,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Hello,Hexo
+      Hexo 安装和使用
     </h1>
   
 
@@ -83,11 +86,26 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h2 id="安装环境"><a href="#安装环境" class="headerlink" title="安装环境"></a>安装环境</h2><h3 id="安装git"><a href="#安装git" class="headerlink" title="安装git"></a>安装git</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install git</span><br></pre></td></tr></table></figure>
+<p>查看是否安装成功<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git version</span><br></pre></td></tr></table></figure></p>
+<h3 id="安装nodejs"><a href="#安装nodejs" class="headerlink" title="安装nodejs"></a>安装nodejs</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install nodejs</span><br></pre></td></tr></table></figure>
+<p>查看版本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ node -v</span><br></pre></td></tr></table></figure>
+<h3 id="安装npm"><a href="#安装npm" class="headerlink" title="安装npm"></a>安装npm</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install npm</span><br></pre></td></tr></table></figure>
+<p>查看是否功<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm -v</span><br></pre></td></tr></table></figure></p>
+<h3 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+<p>查看安装情况<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo version</span><br></pre></td></tr></table></figure></p>
+<h3 id="设置工作目录"><a href="#设置工作目录" class="headerlink" title="设置工作目录"></a>设置工作目录</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir blog</span><br></pre></td></tr></table></figure>
+<p> 初始化<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> blog</span><br><span class="line">hexo init</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure></p>
+<p>或者<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ hexo init blog</span><br><span class="line">$ <span class="built_in">cd</span> blog</span><br><span class="line">$ npm install</span><br></pre></td></tr></table></figure></p>
+<h3 id="配置账号"><a href="#配置账号" class="headerlink" title="配置账号"></a>配置账号</h3><p>编辑_config.yml<br>deploy:<br>  type: git<br>  repo: <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:username/username.github.io.git<br>  branch: master</p>
+<p>  冒号后有空格 </p>
+<p>##<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ hexo n <span class="built_in">test</span>  </span><br><span class="line">$ hexo g</span><br><span class="line">$ hexo s</span><br><span class="line">$ hexo d</span><br></pre></td></tr></table></figure></p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/07/13/Hello-Hexo/" data-id="cjjk53tk30000yol4wbnhelme" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/07/13/Hello-Hexo/" data-id="cjjlj7tnv00006sl40ni8qvlj" class="article-share-link">Share</a>
       
       
     </footer>
@@ -136,7 +154,7 @@
       <ul>
         
           <li>
-            <a href="/2018/07/13/Hello-Hexo/">Hello,Hexo</a>
+            <a href="/2018/07/13/Hello-Hexo/">Hexo 安装和使用</a>
           </li>
         
           <li>
