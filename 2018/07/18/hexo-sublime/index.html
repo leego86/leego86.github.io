@@ -116,7 +116,7 @@
 <meta property="og:site_name" content="跬积">
 <meta property="og:description" content="插件安装安装MarkdownEditingctrl+shift+p唤出sublime控制台，输入“package install”，再输入“markdown ed”点击安装MarkdownEditing，插件需要重启才会生效 除了高亮以外,插件还提供插入图片，超链接等功能快捷键插入图片：win+shift+k插入链接：win+ctrl+k 并且提供了几个”code snippet”（代码段） md">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-07-18T16:04:29.448Z">
+<meta property="og:updated_time" content="2018-07-18T16:07:48.421Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="sublime3编写hexo">
 <meta name="twitter:description" content="插件安装安装MarkdownEditingctrl+shift+p唤出sublime控制台，输入“package install”，再输入“markdown ed”点击安装MarkdownEditing，插件需要重启才会生效 除了高亮以外,插件还提供插入图片，超链接等功能快捷键插入图片：win+shift+k插入链接：win+ctrl+k 并且提供了几个”code snippet”（代码段） md">
@@ -356,7 +356,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-07-19 00:04:29" itemprop="dateModified" datetime="2018-07-19T00:04:29+08:00">2018-07-19</time>
+                <time title="Modified: 2018-07-19 00:07:48" itemprop="dateModified" datetime="2018-07-19T00:07:48+08:00">2018-07-19</time>
               
             
           </span>
@@ -418,8 +418,11 @@
 <p>3 等待一小段时间后，再运行hexo n “xxxx”来生成md博文时，/source/_posts文件夹内除了xxxx.md文件还有一个同名的文件夹<br>4 最后在xxxx.md中想引入图片时，先把图片复制到xxxx这个文件夹中，然后只需要在xxxx.md中按照markdown的格式引入图片：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![你想输入的替代文字](xxxx/图片名.jpg)</span><br></pre></td></tr></table></figure></p>
 <p>注意： xxxx是这个md文件的名字，也是同名文件夹的名字。只需要有文件夹名字即可，不需要有什么绝对路径。你想引入的图片就只需要放入xxxx这个文件夹内就好了，很像引用相对路径。</p>
 <p>5 最后检查一下，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo g</span><br></pre></td></tr></table></figure></p>
-<p>生成页面后，进入public\2017\02\26\index.html文件中查看相关字段，可以发现，html标签内的语句是<figure class="highlight plain"><figcaption><span>src</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## 安装OmniMarkupPreviewer</span><br><span class="line">同样使用ctrl+shift+p package install 安装OmniMarkupPreviewer</span><br><span class="line">重启后生效，可以预览和生成html</span><br><span class="line"></span><br><span class="line">可以在Prefernces-&gt;key bindings 中设置alt+m快捷键，快速预览</span><br></pre></td></tr></table></figure></p>
-<p>{ “keys”: [“alt+m”], “command”: “markdown_preview”, “args”: {“target”: “browser”, “parser”:”markdown”} }<br><code>`</code></p>
+<p>生成页面后，进入public\2017\02\26\index.html文件中查看相关字段，可以发现，html标签内的语句是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;img src=&quot;2017/02/26/xxxx/图片名.jpg&quot;&gt;</span><br></pre></td></tr></table></figure></p>
+<p>，而不是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;img src=&quot;xxxx/图片名.jpg&quot;&gt;</span><br></pre></td></tr></table></figure></p>
+<p>这很重要，关乎你的网页是否可以真正加载你想插入的图片。</p>
+<h2 id="安装OmniMarkupPreviewer"><a href="#安装OmniMarkupPreviewer" class="headerlink" title="安装OmniMarkupPreviewer"></a>安装OmniMarkupPreviewer</h2><p>同样使用ctrl+shift+p package install 安装OmniMarkupPreviewer<br>重启后生效，可以预览和生成html</p>
+<p>可以在Prefernces-&gt;key bindings 中设置alt+m快捷键，快速预览<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; &quot;keys&quot;: [&quot;alt+m&quot;], &quot;command&quot;: &quot;markdown_preview&quot;, &quot;args&quot;: &#123;&quot;target&quot;: &quot;browser&quot;, &quot;parser&quot;:&quot;markdown&quot;&#125; &#125;</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -629,7 +632,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#插件安装"><span class="nav-number">1.</span> <span class="nav-text">插件安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装MarkdownEditing"><span class="nav-number">1.1.</span> <span class="nav-text">安装MarkdownEditing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装hexo插件用于图片上传和显示"><span class="nav-number">1.2.</span> <span class="nav-text">安装hexo插件用于图片上传和显示</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#插件安装"><span class="nav-number">1.</span> <span class="nav-text">插件安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装MarkdownEditing"><span class="nav-number">1.1.</span> <span class="nav-text">安装MarkdownEditing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装hexo插件用于图片上传和显示"><span class="nav-number">1.2.</span> <span class="nav-text">安装hexo插件用于图片上传和显示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装OmniMarkupPreviewer"><span class="nav-number">1.3.</span> <span class="nav-text">安装OmniMarkupPreviewer</span></a></li></ol></li></ol></div>
             
 
           </div>
