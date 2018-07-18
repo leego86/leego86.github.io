@@ -293,6 +293,485 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/18/hexo-sublime/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Li Cheng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="跬积">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/18/hexo-sublime/" itemprop="url">
+                  sublime3编写hexo
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-07-18 23:31:04" itemprop="dateCreated datePublished" datetime="2018-07-18T23:31:04+08:00">2018-07-18</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-07-19 00:04:29" itemprop="dateModified" datetime="2018-07-19T00:04:29+08:00">2018-07-19</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/hexo/" itemprop="url" rel="index"><span itemprop="name">hexo</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="插件安装"><a href="#插件安装" class="headerlink" title="插件安装"></a>插件安装</h1><h2 id="安装MarkdownEditing"><a href="#安装MarkdownEditing" class="headerlink" title="安装MarkdownEditing"></a>安装MarkdownEditing</h2><p>ctrl+shift+p唤出sublime控制台，输入“package install”，再输入“markdown ed”点击安装MarkdownEditing，插件需要重启才会生效</p>
+<p>除了高亮以外,插件还提供插入图片，超链接等功能<br>快捷键<br>插入图片：win+shift+k<br>插入链接：win+ctrl+k</p>
+<p>并且提供了几个”code snippet”（代码段）</p>
+<p>mdi+tab<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![Alt text](/path/to/img.jpg &quot;Optional title&quot;)</span><br></pre></td></tr></table></figure></p>
+<p>mdl+tab<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[contents](link)</span><br></pre></td></tr></table></figure></p>
+<h2 id="安装hexo插件用于图片上传和显示"><a href="#安装hexo插件用于图片上传和显示" class="headerlink" title="安装hexo插件用于图片上传和显示"></a>安装hexo插件用于图片上传和显示</h2><p>1 把主页配置文件_config.yml 里的post_asset_folder:这个选项设置为true</p>
+<p>2 在你的hexo目录下执行这样一句话<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-asset-image --save</span><br></pre></td></tr></table></figure></p>
+<p>这是下载安装一个可以上传本地图片的插件，来自dalao：<a href="https://github.com/CodeFalling/hexo-asset-image" target="_blank" rel="noopener">dalao的git</a></p>
+<p>3 等待一小段时间后，再运行hexo n “xxxx”来生成md博文时，/source/_posts文件夹内除了xxxx.md文件还有一个同名的文件夹<br>4 最后在xxxx.md中想引入图片时，先把图片复制到xxxx这个文件夹中，然后只需要在xxxx.md中按照markdown的格式引入图片：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![你想输入的替代文字](xxxx/图片名.jpg)</span><br></pre></td></tr></table></figure></p>
+<p>注意： xxxx是这个md文件的名字，也是同名文件夹的名字。只需要有文件夹名字即可，不需要有什么绝对路径。你想引入的图片就只需要放入xxxx这个文件夹内就好了，很像引用相对路径。</p>
+<p>5 最后检查一下，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo g</span><br></pre></td></tr></table></figure></p>
+<p>生成页面后，进入public\2017\02\26\index.html文件中查看相关字段，可以发现，html标签内的语句是<figure class="highlight plain"><figcaption><span>src</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## 安装OmniMarkupPreviewer</span><br><span class="line">同样使用ctrl+shift+p package install 安装OmniMarkupPreviewer</span><br><span class="line">重启后生效，可以预览和生成html</span><br><span class="line"></span><br><span class="line">可以在Prefernces-&gt;key bindings 中设置alt+m快捷键，快速预览</span><br></pre></td></tr></table></figure></p>
+<p>{ “keys”: [“alt+m”], “command”: “markdown_preview”, “args”: {“target”: “browser”, “parser”:”markdown”} }<br><code>`</code></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/18/redis哨兵集群搭建/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Li Cheng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="跬积">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/18/redis哨兵集群搭建/" itemprop="url">
+                  redis哨兵集群搭建
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-07-18 23:09:50" itemprop="dateCreated datePublished" datetime="2018-07-18T23:09:50+08:00">2018-07-18</time>
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/18/shadowscoksQt5-on-linux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Li Cheng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="跬积">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/18/shadowscoksQt5-on-linux/" itemprop="url">
+                  shadowscoksQt5 on linux
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-07-18 21:52:09 / Modified: 23:29:29" itemprop="dateCreated datePublished" datetime="2018-07-18T21:52:09+08:00">2018-07-18</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/shadowscoks/" itemprop="url" rel="index"><span itemprop="name">shadowscoks</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="linux版本"><a href="#linux版本" class="headerlink" title="linux版本"></a>linux版本</h1><p>deepin 15.6<br>Linux version 4.15.0-21deepin-generic (pbuilder@gs-PC) (gcc version 7.2.0 (Debian 7.2.0-20)) #21 SMP Mon May 21 05:20:09 UTC 2018</p>
+<h1 id="安装ShadowsocksQt5"><a href="#安装ShadowsocksQt5" class="headerlink" title="安装ShadowsocksQt5"></a>安装ShadowsocksQt5</h1><p>使用deepin-store直接搜索安装或使用命令安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install shadowsocks-qt5</span><br></pre></td></tr></table></figure>
+<p>安装后配置代理服务器</p>
+<p><img src="/2018/07/18/shadowscoksQt5-on-linux/DeepinScreenshot_ss-qt5_20180718223918.png" alt="set shadowsocksQt5"></p>
+<h1 id="安装chrome-SwitchyOmega插件"><a href="#安装chrome-SwitchyOmega插件" class="headerlink" title="安装chrome SwitchyOmega插件"></a>安装chrome SwitchyOmega插件</h1><h2 id="github安装https-github-com-FelisCatus-SwitchyOmega-releases-下载cxr后缀文件"><a href="#github安装https-github-com-FelisCatus-SwitchyOmega-releases-下载cxr后缀文件" class="headerlink" title="github安装https://github.com/FelisCatus/SwitchyOmega/releases 下载cxr后缀文件"></a>github安装<a href="https://github.com/FelisCatus/SwitchyOmega/releases" target="_blank" rel="noopener">https://github.com/FelisCatus/SwitchyOmega/releases</a> 下载cxr后缀文件</h2><h2 id="chrome中输入chrome-extensions-托入下载的文件，完成安装"><a href="#chrome中输入chrome-extensions-托入下载的文件，完成安装" class="headerlink" title="chrome中输入chrome://extensions/ 托入下载的文件，完成安装"></a>chrome中输入chrome://extensions/ 托入下载的文件，完成安装</h2><h2 id="配置代理127-0-0-1-port-1080-“Apply-changes”保存配置"><a href="#配置代理127-0-0-1-port-1080-“Apply-changes”保存配置" class="headerlink" title="配置代理127.0.0.1 port 1080  “Apply changes”保存配置"></a>配置代理127.0.0.1 port 1080  “Apply changes”保存配置</h2><h2 id="使用”auto-switch”或”proxy”使用代理"><a href="#使用”auto-switch”或”proxy”使用代理" class="headerlink" title="使用”auto switch”或”proxy”使用代理"></a>使用”auto switch”或”proxy”使用代理</h2>
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/18/redis容灾测试/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -339,7 +818,7 @@
                 
               
 
-              <time title="Created: 2018-07-18 20:59:03 / Modified: 20:59:54" itemprop="dateCreated datePublished" datetime="2018-07-18T20:59:03+08:00">2018-07-18</time>
+              <time title="Created: 2018-07-18 20:59:03 / Modified: 23:27:04" itemprop="dateCreated datePublished" datetime="2018-07-18T20:59:03+08:00">2018-07-18</time>
             
 
             
@@ -673,7 +1152,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -690,7 +1169,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">2</span>
+                      
+                    
+                    <span class="site-state-item-count">3</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -707,7 +1188,23 @@
                     
                       
                     
-                    <span class="site-state-item-count">2</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
