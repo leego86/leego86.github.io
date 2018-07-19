@@ -108,27 +108,25 @@
 
 
 
-  <meta name="description" content="linux版本deepin 15.6Linux version 4.15.0-21deepin-generic (pbuilder@gs-PC) (gcc version 7.2.0 (Debian 7.2.0-20)) #21 SMP Mon May 21 05:20:09 UTC 2018 安装ShadowsocksQt5使用deepin-store直接搜索安装或使用命令安装 1$ sudo">
-<meta name="keywords" content="ss,linux,chrome,SwitchyOmega">
+  <meta name="description" content="测试用例10个线程死循环执行get set操作，每轮间隔10ms，日志打印执行结果 sentinel场景1，master挂掉，sentinel选举生成新的master客户端连接master进行redis操作，master挂掉后，客户端依然向原master发起请求，这是会抛出连接异常redis.clients.jedis.exceptions.JedisConnectionException: ja">
+<meta name="keywords" content="redis,sentinel,cluster,fault">
 <meta property="og:type" content="article">
-<meta property="og:title" content="shadowscoksQt5 on linux">
-<meta property="og:url" content="http://yoursite.com/2018/07/18/shadowscoksQt5-on-linux/index.html">
+<meta property="og:title" content="Redis fault migration">
+<meta property="og:url" content="http://yoursite.com/2018/07/19/Redis-fault-migration/index.html">
 <meta property="og:site_name" content="跬积">
-<meta property="og:description" content="linux版本deepin 15.6Linux version 4.15.0-21deepin-generic (pbuilder@gs-PC) (gcc version 7.2.0 (Debian 7.2.0-20)) #21 SMP Mon May 21 05:20:09 UTC 2018 安装ShadowsocksQt5使用deepin-store直接搜索安装或使用命令安装 1$ sudo">
+<meta property="og:description" content="测试用例10个线程死循环执行get set操作，每轮间隔10ms，日志打印执行结果 sentinel场景1，master挂掉，sentinel选举生成新的master客户端连接master进行redis操作，master挂掉后，客户端依然向原master发起请求，这是会抛出连接异常redis.clients.jedis.exceptions.JedisConnectionException: ja">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/2018/07/18/shadowscoksQt5-on-linux/DeepinScreenshot_ss-qt5_20180718223918.png">
-<meta property="og:updated_time" content="2018-07-18T15:29:29.530Z">
+<meta property="og:updated_time" content="2018-07-19T13:58:39.434Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="shadowscoksQt5 on linux">
-<meta name="twitter:description" content="linux版本deepin 15.6Linux version 4.15.0-21deepin-generic (pbuilder@gs-PC) (gcc version 7.2.0 (Debian 7.2.0-20)) #21 SMP Mon May 21 05:20:09 UTC 2018 安装ShadowsocksQt5使用deepin-store直接搜索安装或使用命令安装 1$ sudo">
-<meta name="twitter:image" content="http://yoursite.com/2018/07/18/shadowscoksQt5-on-linux/DeepinScreenshot_ss-qt5_20180718223918.png">
+<meta name="twitter:title" content="Redis fault migration">
+<meta name="twitter:description" content="测试用例10个线程死循环执行get set操作，每轮间隔10ms，日志打印执行结果 sentinel场景1，master挂掉，sentinel选举生成新的master客户端连接master进行redis操作，master挂掉后，客户端依然向原master发起请求，这是会抛出连接异常redis.clients.jedis.exceptions.JedisConnectionException: ja">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/07/18/shadowscoksQt5-on-linux/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/07/19/Redis-fault-migration/"/>
 
 
 
@@ -138,7 +136,7 @@
   };
 </script>
 
-  <title>shadowscoksQt5 on linux | 跬积</title>
+  <title>Redis fault migration | 跬积</title>
   
 
 
@@ -299,7 +297,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/18/shadowscoksQt5-on-linux/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/19/Redis-fault-migration/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Li Cheng">
@@ -316,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">shadowscoksQt5 on linux
+          <h1 class="post-title" itemprop="name headline">Redis fault migration
               
             
           </h1>
@@ -341,7 +339,7 @@
                 
               
 
-              <time title="Created: 2018-07-18 21:52:09 / Modified: 23:29:29" itemprop="dateCreated datePublished" datetime="2018-07-18T21:52:09+08:00">2018-07-18</time>
+              <time title="Created: 2018-07-19 21:47:48 / Modified: 21:58:39" itemprop="dateCreated datePublished" datetime="2018-07-19T21:47:48+08:00">2018-07-19</time>
             
 
             
@@ -363,7 +361,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/shadowscoks/" itemprop="url" rel="index"><span itemprop="name">shadowscoks</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/redis/" itemprop="url" rel="index"><span itemprop="name">redis</span></a></span>
 
                 
                 
@@ -397,12 +395,18 @@
       
 
       
-        <h1 id="linux版本"><a href="#linux版本" class="headerlink" title="linux版本"></a>linux版本</h1><p>deepin 15.6<br>Linux version 4.15.0-21deepin-generic (pbuilder@gs-PC) (gcc version 7.2.0 (Debian 7.2.0-20)) #21 SMP Mon May 21 05:20:09 UTC 2018</p>
-<h1 id="安装ShadowsocksQt5"><a href="#安装ShadowsocksQt5" class="headerlink" title="安装ShadowsocksQt5"></a>安装ShadowsocksQt5</h1><p>使用deepin-store直接搜索安装或使用命令安装</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install shadowsocks-qt5</span><br></pre></td></tr></table></figure>
-<p>安装后配置代理服务器</p>
-<p><img src="/2018/07/18/shadowscoksQt5-on-linux/DeepinScreenshot_ss-qt5_20180718223918.png" alt="set shadowsocksQt5"></p>
-<h1 id="安装chrome-SwitchyOmega插件"><a href="#安装chrome-SwitchyOmega插件" class="headerlink" title="安装chrome SwitchyOmega插件"></a>安装chrome SwitchyOmega插件</h1><h2 id="github安装https-github-com-FelisCatus-SwitchyOmega-releases-下载cxr后缀文件"><a href="#github安装https-github-com-FelisCatus-SwitchyOmega-releases-下载cxr后缀文件" class="headerlink" title="github安装https://github.com/FelisCatus/SwitchyOmega/releases 下载cxr后缀文件"></a>github安装<a href="https://github.com/FelisCatus/SwitchyOmega/releases" target="_blank" rel="noopener">https://github.com/FelisCatus/SwitchyOmega/releases</a> 下载cxr后缀文件</h2><h2 id="chrome中输入chrome-extensions-托入下载的文件，完成安装"><a href="#chrome中输入chrome-extensions-托入下载的文件，完成安装" class="headerlink" title="chrome中输入chrome://extensions/ 托入下载的文件，完成安装"></a>chrome中输入chrome://extensions/ 托入下载的文件，完成安装</h2><h2 id="配置代理127-0-0-1-port-1080-“Apply-changes”保存配置"><a href="#配置代理127-0-0-1-port-1080-“Apply-changes”保存配置" class="headerlink" title="配置代理127.0.0.1 port 1080  “Apply changes”保存配置"></a>配置代理127.0.0.1 port 1080  “Apply changes”保存配置</h2><h2 id="使用”auto-switch”或”proxy”使用代理"><a href="#使用”auto-switch”或”proxy”使用代理" class="headerlink" title="使用”auto switch”或”proxy”使用代理"></a>使用”auto switch”或”proxy”使用代理</h2>
+        <h1 id="测试用例"><a href="#测试用例" class="headerlink" title="测试用例"></a>测试用例</h1><p>10个线程死循环执行get set操作，每轮间隔10ms，日志打印执行结果</p>
+<h1 id="sentinel"><a href="#sentinel" class="headerlink" title="sentinel"></a>sentinel</h1><h2 id="场景1，master挂掉，sentinel选举生成新的master"><a href="#场景1，master挂掉，sentinel选举生成新的master" class="headerlink" title="场景1，master挂掉，sentinel选举生成新的master"></a>场景1，master挂掉，sentinel选举生成新的master</h2><p>客户端连接master进行redis操作，master挂掉后，客户端依然向原master发起请求，这是会抛出连接异常redis.clients.jedis.exceptions.JedisConnectionException: java.net.ConnectException: Connection refused: connect，待sentinel生成新主后客户端重新初始化连接池，服务可用，中间服务异常9s左右<br>模拟测试，直接kill master进程</p>
+<h2 id="场景2，master没挂，sentinel选举新的master"><a href="#场景2，master没挂，sentinel选举新的master" class="headerlink" title="场景2，master没挂，sentinel选举新的master"></a>场景2，master没挂，sentinel选举新的master</h2><p>原master变为slave，节点变为只读，客户端访问会抛出节点只读异常redis.clients.jedis.exceptions.JedisDataException: READONLY You can’t write against a read only slave.<br>服务不可用30s左右<br>模拟测试，使用slaveof ip port使master变为slave，sentinel启动选举</p>
+<h1 id="cluster"><a href="#cluster" class="headerlink" title="cluster"></a>cluster</h1><h2 id="场景1，master挂掉，集群把slave升为master"><a href="#场景1，master挂掉，集群把slave升为master" class="headerlink" title="场景1，master挂掉，集群把slave升为master"></a>场景1，master挂掉，集群把slave升为master</h2><p>客户端调用会阻塞，直到服务可用，不会抛出异常，阻塞时间22s<br>模拟测试，使用debug segfault命令模拟节点宕机</p>
+<h2 id="场景2，有节点网络问题或硬件问题导致心跳超时"><a href="#场景2，有节点网络问题或硬件问题导致心跳超时" class="headerlink" title="场景2，有节点网络问题或硬件问题导致心跳超时"></a>场景2，有节点网络问题或硬件问题导致心跳超时</h2><p>集群节点心跳超时，集群不健康导致服务不可用，客户端调用集群会抛出cluster is down的异常，心跳超时设置为5s<br>使用tc工具制造网络延迟<br>tc qdisc add dev eth0 root netem delay 7000ms  制造7s延迟的网络环境<br>tc qdisc del dev eth0 root  关闭延迟<br>延迟6s  slave升为master，原master没有降为slave，状态fail，connected，客户端请求异常，持续4分钟服务不可用（可能是bug），关闭tc，原master降为slave，服务恢复<br>延迟7s   slave升为master，原master没有降为slave，状态fail，connected，客户端阻塞14s，之后服务可用<br>延迟10s slave升为master，客户端阻塞20s，期间间隔10s处还有一次调用成功</p>
+<h2 id="小插曲"><a href="#小插曲" class="headerlink" title="小插曲"></a>小插曲</h2><p>kill master（A）后，重启节点A，集群中A的状态为master，fail，disconnected，重启服务后大概需要30s左右才会降为slave，并加载数据（key 3699162个）<br>重启后立即开始测试，7s延迟也会出现服务一直不可用情况</p>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><ol>
+<li>大部分场景下cluster主从架构的服务可用性比sentinel更高，客户端调用阻塞而不是异常；</li>
+<li>少数场景，比如cluster的节点网络延迟略大于心跳超时时间，集群会处于非健康状态，不能提供服务</li>
+</ol>
+<h2 id="集群故障时sentinel抛异常而cluster只是阻塞原因推测"><a href="#集群故障时sentinel抛异常而cluster只是阻塞原因推测" class="headerlink" title="集群故障时sentinel抛异常而cluster只是阻塞原因推测"></a>集群故障时sentinel抛异常而cluster只是阻塞原因推测</h2><p>  sentinel是一个监控集群，实际客户端连接的是redis的master节点，当master宕机后或被降级为slave后，客户端依然会向master发起请求，这是服务不可用，会抛出连接异常或只读异常，直至sentinel通知客户端master换人了，客户端重新加载连接池，连接新的master继续提供服务<br>  cluster模式下，客户端连接的整个cluster集群，请求发送到cluster后会根据key做路由再做处理，路由的节点在发生主从切换时不是直接返回异常而是阻塞，等待节点正常，主从切换异常情况除外，异常情况集群处于非健康状态，直接返回客户端cluster is down异常，服务不可用</p>
+
       
     </div>
 
@@ -422,13 +426,13 @@
       
         <div class="post-tags">
           
-            <a href="/tags/ss/" rel="tag"># ss</a>
+            <a href="/tags/redis/" rel="tag"># redis</a>
           
-            <a href="/tags/linux/" rel="tag"># linux</a>
+            <a href="/tags/sentinel/" rel="tag"># sentinel</a>
           
-            <a href="/tags/chrome/" rel="tag"># chrome</a>
+            <a href="/tags/cluster/" rel="tag"># cluster</a>
           
-            <a href="/tags/SwitchyOmega/" rel="tag"># SwitchyOmega</a>
+            <a href="/tags/fault/" rel="tag"># fault</a>
           
         </div>
       
@@ -441,8 +445,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/07/18/redis容灾测试/" rel="next" title="redis容灾测试">
-                <i class="fa fa-chevron-left"></i> redis容灾测试
+              <a href="/2018/07/18/hexo-sublime/" rel="next" title="sublime3编写hexo">
+                <i class="fa fa-chevron-left"></i> sublime3编写hexo
               </a>
             
           </div>
@@ -450,10 +454,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/07/18/redis哨兵集群搭建/" rel="prev" title="redis哨兵集群搭建">
-                redis哨兵集群搭建 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -621,7 +621,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linux版本"><span class="nav-number">1.</span> <span class="nav-text">linux版本</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装ShadowsocksQt5"><span class="nav-number">2.</span> <span class="nav-text">安装ShadowsocksQt5</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装chrome-SwitchyOmega插件"><span class="nav-number">3.</span> <span class="nav-text">安装chrome SwitchyOmega插件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#github安装https-github-com-FelisCatus-SwitchyOmega-releases-下载cxr后缀文件"><span class="nav-number">3.1.</span> <span class="nav-text">github安装https://github.com/FelisCatus/SwitchyOmega/releases 下载cxr后缀文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chrome中输入chrome-extensions-托入下载的文件，完成安装"><span class="nav-number">3.2.</span> <span class="nav-text">chrome中输入chrome://extensions/ 托入下载的文件，完成安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置代理127-0-0-1-port-1080-“Apply-changes”保存配置"><span class="nav-number">3.3.</span> <span class="nav-text">配置代理127.0.0.1 port 1080  “Apply changes”保存配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用”auto-switch”或”proxy”使用代理"><span class="nav-number">3.4.</span> <span class="nav-text">使用”auto switch”或”proxy”使用代理</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#测试用例"><span class="nav-number">1.</span> <span class="nav-text">测试用例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sentinel"><span class="nav-number">2.</span> <span class="nav-text">sentinel</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#场景1，master挂掉，sentinel选举生成新的master"><span class="nav-number">2.1.</span> <span class="nav-text">场景1，master挂掉，sentinel选举生成新的master</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#场景2，master没挂，sentinel选举新的master"><span class="nav-number">2.2.</span> <span class="nav-text">场景2，master没挂，sentinel选举新的master</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cluster"><span class="nav-number">3.</span> <span class="nav-text">cluster</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#场景1，master挂掉，集群把slave升为master"><span class="nav-number">3.1.</span> <span class="nav-text">场景1，master挂掉，集群把slave升为master</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#场景2，有节点网络问题或硬件问题导致心跳超时"><span class="nav-number">3.2.</span> <span class="nav-text">场景2，有节点网络问题或硬件问题导致心跳超时</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小插曲"><span class="nav-number">3.3.</span> <span class="nav-text">小插曲</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小结"><span class="nav-number">4.</span> <span class="nav-text">小结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#集群故障时sentinel抛异常而cluster只是阻塞原因推测"><span class="nav-number">4.1.</span> <span class="nav-text">集群故障时sentinel抛异常而cluster只是阻塞原因推测</span></a></li></ol></li></ol></div>
             
 
           </div>
