@@ -339,7 +339,7 @@
                 
               
 
-              <time title="Created: 2018-07-19 21:47:48 / Modified: 22:05:11" itemprop="dateCreated datePublished" datetime="2018-07-19T21:47:48+08:00">2018-07-19</time>
+              <time title="Created: 2018-07-19 21:47:48 / Modified: 22:12:40" itemprop="dateCreated datePublished" datetime="2018-07-19T21:47:48+08:00">2018-07-19</time>
             
 
             
@@ -398,10 +398,11 @@
         
           
             <h1 id="测试用例"><a href="#测试用例" class="headerlink" title="测试用例"></a>测试用例</h1><p>10个线程死循环执行get set操作，每轮间隔10ms，日志打印执行结果</p>
-<h1 id="sentinel"><a href="#sentinel" class="headerlink" title="sentinel"></a>sentinel</h1><h2 id="场景1，master挂掉，sentinel选举生成新的master"><a href="#场景1，master挂掉，sentinel选举生成新的master" class="headerlink" title="场景1，master挂掉，sentinel选举生成新的master"></a>场景1，master挂掉，sentinel选举生成新的master</h2><p>客户端连接master进行redis操作，master挂掉后，客户端依然向原master发起请求，这是会抛出连接异常redis.clients.jedis.exceptions.JedisConnectionException: java.net.ConnectException: Connection refused: connect，待sentinel生成新主后客户端重新初始化连接池，服务可用，中间服务异常9s左右<br>模拟测试，直接kill master进程</p>
-<h2 id="场景2，master没挂，sentinel选举新的master"><a href="#场景2，master没挂，sentinel选举新的master" class="headerlink" title="场景2，master没挂，sentinel选举新的master"></a>场景2，master没挂，sentinel选举新的master</h2><p>原master变为slave，节点变为只读，客户端访问会抛出节点只读异常redis.clients.jedis.exceptions.JedisDataException: READONLY You can’t write against a read only slave.<br>服务不可用30s左右<br>模拟测试，使用slaveof ip port使master变为slave，sentinel启动选举</p>
+<h1 id="sentinel"><a href="#sentinel" class="headerlink" title="sentinel"></a>sentinel</h1><h2 id="场景1，master挂掉，sentinel选举生成新的master"><a href="#场景1，master挂掉，sentinel选举生成新的master" class="headerlink" title="场景1，master挂掉，sentinel选举生成新的master"></a>场景1，master挂掉，sentinel选举生成新的master</h2><p>客户端连接master进行redis操作，master挂掉后，客户端依然向原master发起请求，这是会抛出连接异常<br><code>redis.clients.jedis.exceptions.JedisConnectionException: java.net.ConnectException: Connection refused:</code> connect，待sentinel生成新主后客户端重新初始化连接池，服务可用，中间服务异常9s左右<br>模拟测试，直接kill master进程</p>
+<h2 id="场景2，master没挂，sentinel选举新的master"><a href="#场景2，master没挂，sentinel选举新的master" class="headerlink" title="场景2，master没挂，sentinel选举新的master"></a>场景2，master没挂，sentinel选举新的master</h2><p>原master变为slave，节点变为只读，客户端访问会抛出节点只读异常<br><code>redis.clients.jedis.exceptions.JedisDataException: READONLY You can&#39;t write against a read only slave.</code><br>服务不可用30s左右<br>模拟测试，使用slaveof ip port使master变为slave，sentinel启动选举</p>
 <h1 id="cluster"><a href="#cluster" class="headerlink" title="cluster"></a>cluster</h1><h2 id="场景1，master挂掉，集群把slave升为master"><a href="#场景1，master挂掉，集群把slave升为master" class="headerlink" title="场景1，master挂掉，集群把slave升为master"></a>场景1，master挂掉，集群把slave升为master</h2><p>客户端调用会阻塞，直到服务可用，不会抛出异常，阻塞时间22s<br>模拟测试，使用debug segfault命令模拟节点宕机</p>
-<h2 id="场景2，有节点网络问题或硬件问题导致心跳超时"><a href="#场景2，有节点网络问题或硬件问题导致心跳超时" class="headerlink" title="场景2，有节点网络问题或硬件问题导致心跳超时"></a>场景2，有节点网络问题或硬件问题导致心跳超时</h2><p>集群节点心跳超时，集群不健康导致服务不可用，客户端调用集群会抛出cluster is down的异常，心跳超时设置为5s<br>使用tc工具制造网络延迟<br>tc qdisc add dev eth0 root netem delay 7000ms  制造7s延迟的网络环境<br>tc qdisc del dev eth0 root  关闭延迟<br>延迟6s  slave升为master，原master没有降为slave，状态fail，connected，客户端请求异常，持续4分钟服务不可用（可能是bug），关闭tc，原master降为slave，服务恢复<br>延迟7s   slave升为master，原master没有降为slave，状态fail，connected，客户端阻塞14s，之后服务可用<br>延迟10s slave升为master，客户端阻塞20s，期间间隔10s处还有一次调用成功</p>
+<h2 id="场景2，有节点网络问题或硬件问题导致心跳超时"><a href="#场景2，有节点网络问题或硬件问题导致心跳超时" class="headerlink" title="场景2，有节点网络问题或硬件问题导致心跳超时"></a>场景2，有节点网络问题或硬件问题导致心跳超时</h2><p>集群节点心跳超时，集群不健康导致服务不可用，客户端调用集群会抛出cluster is down的异常，心跳超时设置为5s<br>使用tc工具制造网络延迟<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ tc qdisc add dev eth0 root netem delay 7000ms  制造7s延迟的网络环境</span><br><span class="line">$ tc qdisc del dev eth0 root  关闭延迟</span><br></pre></td></tr></table></figure></p>
+<p>延迟6s  slave升为master，原master没有降为slave，状态fail，connected，客户端请求异常，持续4分钟服务不可用（可能是bug），关闭tc，原master降为slave，服务恢复<br>延迟7s   slave升为master，原master没有降为slave，状态fail，connected，客户端阻塞14s，之后服务可用<br>延迟10s slave升为master，客户端阻塞20s，期间间隔10s处还有一次调用成功</p>
 <h2 id="小插曲"><a href="#小插曲" class="headerlink" title="小插曲"></a>小插曲</h2><p>kill master（A）后，重启节点A，集群中A的状态为master，fail，disconnected，重启服务后大概需要30s左右才会降为slave，并加载数据（key 3699162个）<br>重启后立即开始测试，7s延迟也会出现服务一直不可用情况</p>
 <h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><ol>
 <li>大部分场景下cluster主从架构的服务可用性比sentinel更高，客户端调用阻塞而不是异常；</li>
