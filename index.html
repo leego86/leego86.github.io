@@ -1163,7 +1163,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-07-19 22:05:43" itemprop="dateModified" datetime="2018-07-19T22:05:43+08:00">2018-07-19</time>
+                <time title="Modified: 2018-07-19 22:08:26" itemprop="dateModified" datetime="2018-07-19T22:08:26+08:00">2018-07-19</time>
               
             
           </span>
@@ -1222,7 +1222,8 @@
 <h3 id="设置ssh密钥"><a href="#设置ssh密钥" class="headerlink" title="设置ssh密钥"></a>设置ssh密钥</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C leego8697@gmail.com</span><br></pre></td></tr></table></figure>
 <p>回车三次在.ssh下会生成id_rsa和id_rsa.pub两个文件<br>进入ssh目录<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> ~/.ssh</span><br></pre></td></tr></table></figure></p>
 <hr>
-<p>不确定是不是必需<br>添加密钥到ssh-agent<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">eval</span> <span class="string">"<span class="variable">$(ssh-agent -s)</span>"</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>不确定是不是必需</strong></p>
+<p>添加密钥到ssh-agent<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">eval</span> <span class="string">"<span class="variable">$(ssh-agent -s)</span>"</span></span><br></pre></td></tr></table></figure></p>
 <p>添加生成的ssh key到ssh-agent<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-add ~/.ssh/id_rsa</span><br></pre></td></tr></table></figure></p>
 <hr>
 <p>###配置github ssh<br>登录github 进入settings SSH and GPG keys<br>点击 New ssh key<br>title自定义<br>key 复制id_rsa.pub内的值，然后保存</p>
