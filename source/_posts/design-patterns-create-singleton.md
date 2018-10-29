@@ -1,8 +1,9 @@
 ---
 title: 单例模式
 date: 2018-07-30 23:26:49
-tags: - design patterns
-      - singleton
+tags: 
+    - design patterns
+    - singleton
 categories: design patterns
 ---
 **定义：**保证一个类仅有一个实例，并提供一个访问它的全局访问点。

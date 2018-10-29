@@ -1,8 +1,9 @@
 ---
 title: 设计模式六大基本原则
 date: 2018-07-30 22:26:43
-tags: - design patterns
-      - 原则
+tags: 
+    - design patterns
+    - 原则
 categories: design patterns
 ---
 ## 1、单一职责原则（Single Responsibility Principle，简称SRP ）

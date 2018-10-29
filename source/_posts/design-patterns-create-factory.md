@@ -1,8 +1,9 @@
 ---
 title: 工厂方法模式
 date: 2018-07-30 22:58:11
-tags: - design patterns
-      - factory
+tags: 
+    - design patterns
+    - factory
 categories: design patterns
 ---
 工厂方法模式分为三种：
