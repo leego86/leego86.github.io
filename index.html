@@ -342,7 +342,7 @@
                 
               
 
-              <time title="Created: 2019-04-11 22:31:33 / Modified: 22:52:22" itemprop="dateCreated datePublished" datetime="2019-04-11T22:31:33+08:00">2019-04-11</time>
+              <time title="Created: 2019-04-11 22:31:33 / Modified: 23:06:32" itemprop="dateCreated datePublished" datetime="2019-04-11T22:31:33+08:00">2019-04-11</time>
             
 
             
@@ -400,540 +400,14 @@
       
         
           
-            <h1 id="1-缓存穿透"><a href="#1-缓存穿透" class="headerlink" title="1 缓存穿透"></a>1 缓存穿透</h1><pre><code>如果缓存不命中会到db上查询数据再加载到缓存中，以备后面的请求直接从缓存查询数据，减小db的压力，但是如果db中也不存在的数据，请求每次都会过缓存层，直接访问的db，造成db压力激增，如果恶意攻击的话可能造成db宕机。
-简单的办法是db中没有值就再缓存中存储null，这样请求就不会穿透缓存直接打到db上。但是如果有大量的key都是存储的空值，对于缓存资源来说也是一种浪费。
-另一种方法就是在缓存层之前加一个布隆过滤层，过滤器认为存在的key才访问缓存或db，就能直接减少缓存层的资源浪费
-</code></pre><h1 id="2-缓存击穿"><a href="#2-缓存击穿" class="headerlink" title="2 缓存击穿"></a>2 缓存击穿</h1><pre><code>高并发场景下，如果一个访问量很大的key过期了，同一时间会有大量的请求访问db，就是缓存击穿，也会对db造成压力激增。
-解决办法是在读取db重新加载缓存的代码上增加互斥锁，避免大量的请求打到db上
-</code></pre><h1 id="3-缓存雪崩"><a href="#3-缓存雪崩" class="headerlink" title="3 缓存雪崩"></a>3 缓存雪崩</h1><pre><code>高并发场景下，如果某一时刻有大量的key过期或缓存层整个宕机，造成很大量请求直接访问到db，造成db宕机，这种就称为缓存雪崩。
-这种情况下首先需要保证缓存的高可用，比如redis的cluster主从或sentinel集群。
-其次，缓存的过期时间最好使用随机数作为系数，错开缓存的失效时间，避免大量的key同时失效，从而避免缓存雪崩情况
-</code></pre>
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/22/design-patterns-create-factory_181122000452/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Li Cheng">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="跬积">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/11/22/design-patterns-create-factory_181122000452/" itemprop="url">
-                  Untitled
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-11-22 00:04:52" itemprop="dateCreated datePublished" datetime="2018-11-22T00:04:52+08:00">2018-11-22</time>
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>design-patterns-create-factory.md—/home/leego/blog/source/_posts</title>
-    <style type="text/css">
-    html{font-family: sans-serif;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%}body{margin: 0}article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display: block}audio,canvas,progress,video{display: inline-block;vertical-align: baseline}audio:not([controls]){display: none;height: 0}[hidden],template{display: none}a{background: transparent}a:active,a:hover{outline: 0}abbr[title]{border-bottom: 1px dotted}b,strong{font-weight: bold}dfn{font-style: italic}h1{font-size: 2em;margin: 0.67em 0}mark{background: #ff0;color: #000}small{font-size: 80%}sub,sup{font-size: 75%;line-height: 0;position: relative;vertical-align: baseline}sup{top: -0.5em}sub{bottom: -0.25em}img{border: 0}svg:not(:root){overflow: hidden}figure{margin: 1em 40px}hr{box-sizing: content-box;height: 0}pre{overflow: auto}code,kbd,pre,samp{font-family: monospace, monospace;font-size: 1em}button,input,optgroup,select,textarea{color: inherit;font: inherit;margin: 0}button{overflow: visible}button,select{text-transform: none}button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance: button;cursor: pointer}button[disabled],html input[disabled]{cursor: default}button::-moz-focus-inner,input::-moz-focus-inner{border: 0;padding: 0}input{line-height: normal}input[type="checkbox"],input[type="radio"]{box-sizing: border-box;padding: 0}input[type="number"]::-webkit-inner-spin-button,input[type="number"]::-webkit-outer-spin-button{height: auto}input[type="search"]{-webkit-appearance: textfield;box-sizing: content-box}input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration{-webkit-appearance: none}fieldset{border: 1px solid #c0c0c0;margin: 0 2px;padding: 0.35em 0.625em 0.75em}legend{border: 0;padding: 0}textarea{overflow: auto}optgroup{font-weight: bold}table{border-collapse: collapse;border-spacing: 0}td,th{padding: 0}*{box-sizing: border-box}input,select,textarea,button{font: 13px/1.4 Helvetica, arial, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"}body{min-width: 1020px;font: 13px/1.4 Helvetica, arial, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";color: #333;background-color: #fff}a{color: #4183c4;text-decoration: none}a:hover,a:active{text-decoration: underline}hr,.rule{height: 0;margin: 15px 0;overflow: hidden;background: transparent;border: 0;border-bottom: 1px solid #ddd}hr:before,.rule:before{display: table;content: ""}hr:after,.rule:after{display: table;clear: both;content: ""}h1,h2,h3,h4,h5,h6{margin-top: 15px;margin-bottom: 15px;line-height: 1.1}h1{font-size: 30px}h2{font-size: 21px}h3{font-size: 16px}h4{font-size: 14px}h5{font-size: 12px}h6{font-size: 11px}small{font-size: 90%}blockquote{margin: 0}.lead{margin-bottom: 30px;font-size: 20px;font-weight: 300;color: #555}.text-muted{color: #999}.text-danger{color: #bd2c00}.text-emphasized{font-weight: bold;color: #333}ul,ol{padding: 0;margin-top: 0;margin-bottom: 0}ol ol,ul ol{list-style-type: lower-roman}ul ul ol,ul ol ol,ol ul ol,ol ol ol{list-style-type: lower-alpha}dd{margin-left: 0}tt,code{font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;font-size: 12px}pre{margin-top: 0;margin-bottom: 0;font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace}#realtime .status{overflow: visible;position: absolute;top: -5px;left: 0;background: url("/public/images/github-status.png");width: 26px;height: 26px;display: block;margin: 0 5px 0 0}#realtime .up{background-position: 0 0}#realtime .problem{background-position: 0 -53px}#realtime .down{background-position: 0 -26px}.container{max-width: 920px;margin: 0 auto 20px auto}#header{background: #FAFAFA;background: -moz-linear-gradient(#FAFAFA, #EAEAEA);background: -webkit-linear-gradient(#FAFAFA, #EAEAEA);-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#fafafa', endColorstr='#eaeaea')";border-bottom: 1px solid #CACACA;box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4),0 0 10px rgba(0, 0, 0, 0.1)}#markup{padding: 3px}#markup article{padding-top: 30px}.markdown-body{overflow: hidden;font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;font-size: 16px;line-height: 1.6;word-wrap: break-word}.markdown-body>*:first-child{margin-top: 0 !important}.markdown-body>*:last-child{margin-bottom: 0 !important}.markdown-body .absent{color: #c00}.markdown-body .anchor{position: absolute;top: 0;left: 0;display: block;padding-right: 6px;padding-left: 30px;margin-left: -30px}.markdown-body .anchor:focus{outline: none}.markdown-body h1,.markdown-body h2,.markdown-body h3,.markdown-body h4,.markdown-body h5,.markdown-body h6{position: relative;margin-top: 1em;margin-bottom: 16px;font-weight: bold;line-height: 1.4}.markdown-body h1 .octicon-link,.markdown-body h2 .octicon-link,.markdown-body h3 .octicon-link,.markdown-body h4 .octicon-link,.markdown-body h5 .octicon-link,.markdown-body h6 .octicon-link{display: none;color: #000;vertical-align: middle}.markdown-body h1:hover .anchor,.markdown-body h2:hover .anchor,.markdown-body h3:hover .anchor,.markdown-body h4:hover .anchor,.markdown-body h5:hover .anchor,.markdown-body h6:hover .anchor{padding-left: 8px;margin-left: -30px;text-decoration: none}.markdown-body h1:hover .anchor .octicon-link,.markdown-body h2:hover .anchor .octicon-link,.markdown-body h3:hover .anchor .octicon-link,.markdown-body h4:hover .anchor .octicon-link,.markdown-body h5:hover .anchor .octicon-link,.markdown-body h6:hover .anchor .octicon-link{display: inline-block}.markdown-body h1 tt,.markdown-body h1 code,.markdown-body h2 tt,.markdown-body h2 code,.markdown-body h3 tt,.markdown-body h3 code,.markdown-body h4 tt,.markdown-body h4 code,.markdown-body h5 tt,.markdown-body h5 code,.markdown-body h6 tt,.markdown-body h6 code{font-size: inherit}.markdown-body h1{padding-bottom: 0.3em;font-size: 2.25em;line-height: 1.2;border-bottom: 1px solid #eee}.markdown-body h1 .anchor{line-height: 1}.markdown-body h2{padding-bottom: 0.3em;font-size: 1.75em;line-height: 1.225;border-bottom: 1px solid #eee}.markdown-body h2 .anchor{line-height: 1}.markdown-body h3{font-size: 1.5em;line-height: 1.43}.markdown-body h3 .anchor{line-height: 1.2}.markdown-body h4{font-size: 1.25em}.markdown-body h4 .anchor{line-height: 1.2}.markdown-body h5{font-size: 1em}.markdown-body h5 .anchor{line-height: 1.1}.markdown-body h6{font-size: 1em;color: #777}.markdown-body h6 .anchor{line-height: 1.1}.markdown-body p,.markdown-body blockquote,.markdown-body ul,.markdown-body ol,.markdown-body dl,.markdown-body table,.markdown-body pre{margin-top: 0;margin-bottom: 16px}.markdown-body hr{height: 4px;padding: 0;margin: 16px 0;background-color: #e7e7e7;border: 0 none}.markdown-body ul,.markdown-body ol{padding-left: 2em}.markdown-body ul.no-list,.markdown-body ol.no-list{padding: 0;list-style-type: none}.markdown-body ul ul,.markdown-body ul ol,.markdown-body ol ol,.markdown-body ol ul{margin-top: 0;margin-bottom: 0}.markdown-body li>p{margin-top: 16px}.markdown-body dl{padding: 0}.markdown-body dl dt{padding: 0;margin-top: 16px;font-size: 1em;font-style: italic;font-weight: bold}.markdown-body dl dd{padding: 0 16px;margin-bottom: 16px}.markdown-body blockquote{padding: 0 15px;color: #777;border-left: 4px solid #ddd}.markdown-body blockquote>:first-child{margin-top: 0}.markdown-body blockquote>:last-child{margin-bottom: 0}.markdown-body table{display: block;width: 100%;overflow: auto;word-break: normal;word-break: keep-all}.markdown-body table th{font-weight: bold}.markdown-body table th,.markdown-body table td{padding: 6px 13px;border: 1px solid #ddd}.markdown-body table tr{background-color: #fff;border-top: 1px solid #ccc}.markdown-body table tr:nth-child(2n){background-color: #f8f8f8}.markdown-body img{max-width: 100%;box-sizing: border-box}.markdown-body span.frame{display: block;overflow: hidden}.markdown-body span.frame>span{display: block;float: left;width: auto;padding: 7px;margin: 13px 0 0;overflow: hidden;border: 1px solid #ddd}.markdown-body span.frame span img{display: block;float: left}.markdown-body span.frame span span{display: block;padding: 5px 0 0;clear: both;color: #333}.markdown-body span.align-center{display: block;overflow: hidden;clear: both}.markdown-body span.align-center>span{display: block;margin: 13px auto 0;overflow: hidden;text-align: center}.markdown-body span.align-center span img{margin: 0 auto;text-align: center}.markdown-body span.align-right{display: block;overflow: hidden;clear: both}.markdown-body span.align-right>span{display: block;margin: 13px 0 0;overflow: hidden;text-align: right}.markdown-body span.align-right span img{margin: 0;text-align: right}.markdown-body span.float-left{display: block;float: left;margin-right: 13px;overflow: hidden}.markdown-body span.float-left span{margin: 13px 0 0}.markdown-body span.float-right{display: block;float: right;margin-left: 13px;overflow: hidden}.markdown-body span.float-right>span{display: block;margin: 13px auto 0;overflow: hidden;text-align: right}.markdown-body code,.markdown-body tt{padding: 0;padding-top: 0.2em;padding-bottom: 0.2em;margin: 0;font-size: 85%;background-color: rgba(0,0,0,0.04);border-radius: 3px}.markdown-body code:before,.markdown-body code:after,.markdown-body tt:before,.markdown-body tt:after{letter-spacing: -0.2em;content: "\00a0"}.markdown-body code br,.markdown-body tt br{display: none}.markdown-body del code{text-decoration: inherit}.markdown-body pre>code{padding: 0;margin: 0;font-size: 100%;word-break: normal;white-space: pre;background: transparent;border: 0}.markdown-body .highlight{margin-bottom: 16px}.markdown-body .highlight pre,.markdown-body pre{padding: 16px;overflow: auto;font-size: 85%;line-height: 1.45;background-color: #f7f7f7;border-radius: 3px}.markdown-body .highlight pre{margin-bottom: 0;word-break: normal}.markdown-body pre{word-wrap: normal}.markdown-body pre code,.markdown-body pre tt{display: inline;max-width: initial;padding: 0;margin: 0;overflow: initial;line-height: inherit;word-wrap: normal;background-color: transparent;border: 0}.markdown-body pre code:before,.markdown-body pre code:after,.markdown-body pre tt:before,.markdown-body pre tt:after{content: normal}.markdown-body kbd{display: inline-block;padding: 3px 5px;font-size: 11px;line-height: 10px;color: #555;vertical-align: middle;background-color: #fcfcfc;border: solid 1px #ccc;border-bottom-color: #bbb;border-radius: 3px;box-shadow: inset 0 -1px 0 #bbb}.codehilite{background: #ffffff}.codehilite .c{color: #999988;font-style: italic}.codehilite .err{color: #a61717;background-color: #e3d2d2}.codehilite .k{color: #000000;font-weight: bold}.codehilite .o{color: #000000;font-weight: bold}.codehilite .cm{color: #999988;font-style: italic}.codehilite .cp{color: #999999;font-weight: bold}.codehilite .c1{color: #999988;font-style: italic}.codehilite .cs{color: #999999;font-weight: bold;font-style: italic}.codehilite .gd{color: #000000;background-color: #ffdddd}.codehilite .gd .x{color: #000000;background-color: #ffaaaa}.codehilite .ge{color: #000000;font-style: italic}.codehilite .gr{color: #aa0000}.codehilite .gh{color: #999999}.codehilite .gi{color: #000000;background-color: #ddffdd}.codehilite .gi .x{color: #000000;background-color: #aaffaa}.codehilite .go{color: #888888}.codehilite .gp{color: #555555}.codehilite .gs{font-weight: bold}.codehilite .gu{color: #aaaaaa}.codehilite .gt{color: #aa0000}.codehilite .kc{color: #000000;font-weight: bold}.codehilite .kd{color: #000000;font-weight: bold}.codehilite .kp{color: #000000;font-weight: bold}.codehilite .kr{color: #000000;font-weight: bold}.codehilite .kt{color: #445588;font-weight: bold}.codehilite .m{color: #009999}.codehilite .s{color: #d14}.codehilite .na{color: #008080}.codehilite .nb{color: #0086B3}.codehilite .nc{color: #445588;font-weight: bold}.codehilite .no{color: #008080}.codehilite .ni{color: #800080}.codehilite .ne{color: #990000;font-weight: bold}.codehilite .nf{color: #990000;font-weight: bold}.codehilite .nn{color: #555555}.codehilite .nt{color: #000080}.codehilite .nv{color: #008080}.codehilite .ow{color: #000000;font-weight: bold}.codehilite .w{color: #bbbbbb}.codehilite .mf{color: #009999}.codehilite .mh{color: #009999}.codehilite .mi{color: #009999}.codehilite .mo{color: #009999}.codehilite .sb{color: #d14}.codehilite .sc{color: #d14}.codehilite .sd{color: #d14}.codehilite .s2{color: #d14}.codehilite .se{color: #d14}.codehilite .sh{color: #d14}.codehilite .si{color: #d14}.codehilite .sx{color: #d14}.codehilite .sr{color: #009926}.codehilite .s1{color: #d14}.codehilite .ss{color: #990073}.codehilite .bp{color: #999999}.codehilite .vc{color: #008080}.codehilite .vg{color: #008080}.codehilite .vi{color: #008080}.codehilite .il{color: #009999}
-    </style>
-    <style type="text/css">
-      .markdown-body hr{background:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OENDRjNBN0E2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OENDRjNBN0I2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4Q0NGM0E3ODY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4Q0NGM0E3OTY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqqezsUAAAAfSURBVHjaYmRABcYwBiM2QSA4y4hNEKYDQxAEAAIMAHNGAzhkPOlYAAAAAElFTkSuQmCC")}
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <div id="markup">
-        <article id="content" class="markdown-body">
-          <h1>工厂方法模式分为三种：</h1>
-<h2>1 普通工厂模式</h2>
-<p>就是建立一个工厂类，对实现了同一接口的一些类进行实例的创建。首先看下关系图：</p>
-<p><img alt="" src="data:image/png;base64,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"></p>
-<p>举例如下：（我们举一个发送邮件和短信的例子）
-首先，创建二者的共同接口：</p>
-<div class="codehilite"><pre><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Sender</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">Send</span><span class="o">();</span>
-<span class="o">}</span>
-</pre></div>
-
-
-<p>其次，创建实现类：</p>
-<div class="codehilite"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MailSender</span> <span class="kd">implements</span> <span class="n">Sender</span> <span class="o">{</span>
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">Send</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;this is mailsender!&quot;</span><span class="o">);</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</pre></div>
-
-
-<p>最后，建工厂类：</p>
-<div class="codehilite"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SendFactory</span> <span class="o">{</span>
-
-    <span class="kd">public</span> <span class="n">Sender</span> <span class="nf">produce</span><span class="o">(</span><span class="n">String</span> <span class="n">type</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(</span><span class="s">&quot;mail&quot;</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">type</span><span class="o">))</span> <span class="o">{</span>
-            <span class="k">return</span> <span class="k">new</span> <span class="n">MailSender</span><span class="o">();</span>
-        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="s">&quot;sms&quot;</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">type</span><span class="o">))</span> <span class="o">{</span>
-            <span class="k">return</span> <span class="k">new</span> <span class="n">SmsSender</span><span class="o">();</span>
-        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;请输入正确的类型!&quot;</span><span class="o">);</span>
-            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</pre></div>
-
-
-<p>然后我们来测试下</p>
-<div class="codehilite"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FactoryTest</span> <span class="o">{</span>
-
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">SendFactory</span> <span class="n">factory</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SendFactory</span><span class="o">();</span>
-        <span class="n">Sender</span> <span class="n">sender</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="na">produce</span><span class="o">(</span><span class="s">&quot;sms&quot;</span><span class="o">);</span>
-        <span class="n">sender</span><span class="o">.</span><span class="na">Send</span><span class="o">();</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</pre></div>
-
-
-<p>输出：this is sms sender!</p>
-<h2>2 多个工厂方法模式</h2>
-<p>是对普通工厂方法模式的改进，在普通工厂方法模式中，如果传递的字符串出错，则不能正确创建对象，而多个工厂方法模式是提供多个工厂方法，分别创建对象。关系图：
-<img alt="" src="data:image/png;base64,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"><br>
-将上面的代码做下修改，改动下SendFactory类就行，如下：</p>
-<div class="codehilite"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SendFactory</span> <span class="o">{</span>
-
-    <span class="kd">public</span> <span class="n">Sender</span> <span class="nf">produceMail</span><span class="o">(){</span>
-        <span class="k">return</span> <span class="k">new</span> <span class="n">MailSender</span><span class="o">();</span>
-    <span class="o">}</span>
-
-    <span class="kd">public</span> <span class="n">Sender</span> <span class="nf">produceSms</span><span class="o">(){</span>
-        <span class="k">return</span> <span class="k">new</span> <span class="n">SmsSender</span><span class="o">();</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</pre></div>
-
-
-<p>测试类如下：</p>
-<div class="codehilite"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FactoryTest</span> <span class="o">{</span>  
-
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>  
-        <span class="n">SendFactory</span> <span class="n">factory</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SendFactory</span><span class="o">();</span>  
-        <span class="n">Sender</span> <span class="n">sender</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="na">produceMail</span><span class="o">();</span>  
-        <span class="n">sender</span><span class="o">.</span><span class="na">Send</span><span class="o">();</span>  
-    <span class="o">}</span>  
-<span class="o">}</span>  
-</pre></div>
-
-
-<p>输出：this is mailsender!</p>
-<h2>3 静态工厂方法模式</h2>
-<p>将上面的多个工厂方法模式里的方法置为静态的，不需要创建实例，直接调用即可。</p>
-<div class="codehilite"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SendFactory</span> <span class="o">{</span>
-
-    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Sender</span> <span class="nf">produceMail</span><span class="o">(){</span>
-        <span class="k">return</span> <span class="k">new</span> <span class="n">MailSender</span><span class="o">();</span>
-    <span class="o">}</span>
-
-    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Sender</span> <span class="nf">produceSms</span><span class="o">(){</span>
-        <span class="k">return</span> <span class="k">new</span> <span class="n">SmsSender</span><span class="o">();</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">FactoryTest</span> <span class="o">{</span>  
-
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>      
-        <span class="n">Sender</span> <span class="n">sender</span> <span class="o">=</span> <span class="n">SendFactory</span><span class="o">.</span><span class="na">produceMail</span><span class="o">();</span>  
-        <span class="n">sender</span><span class="o">.</span><span class="na">Send</span><span class="o">();</span>  
-    <span class="o">}</span>  
-<span class="o">}</span>
-</pre></div>
-
-
-<p>输出：this is mailsender!</p>
-<p>总体来说，工厂模式适合：凡是出现了大量的产品需要创建，并且具有共同的接口时，可以通过工厂方法模式进行创建。在以上的三种模式中，第一种如果传入的字符串有误，不能正确创建对象，第三种相对于第二种，不需要实例化工厂类，所以，大多数情况下，我们会选用第三种——静态工厂方法模式。</p>
-        </article>
-      </div>
-    </div>
-  </body>
-</html>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/22/design-patterns-create-factory_181122000450/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Li Cheng">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="跬积">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/11/22/design-patterns-create-factory_181122000450/" itemprop="url">
-                  Untitled
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-11-22 00:04:50" itemprop="dateCreated datePublished" datetime="2018-11-22T00:04:50+08:00">2018-11-22</time>
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>design-patterns-create-factory.md—/home/leego/blog/source/_posts</title>
-    <style type="text/css">
-    html{font-family: sans-serif;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%}body{margin: 0}article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display: block}audio,canvas,progress,video{display: inline-block;vertical-align: baseline}audio:not([controls]){display: none;height: 0}[hidden],template{display: none}a{background: transparent}a:active,a:hover{outline: 0}abbr[title]{border-bottom: 1px dotted}b,strong{font-weight: bold}dfn{font-style: italic}h1{font-size: 2em;margin: 0.67em 0}mark{background: #ff0;color: #000}small{font-size: 80%}sub,sup{font-size: 75%;line-height: 0;position: relative;vertical-align: baseline}sup{top: -0.5em}sub{bottom: -0.25em}img{border: 0}svg:not(:root){overflow: hidden}figure{margin: 1em 40px}hr{box-sizing: content-box;height: 0}pre{overflow: auto}code,kbd,pre,samp{font-family: monospace, monospace;font-size: 1em}button,input,optgroup,select,textarea{color: inherit;font: inherit;margin: 0}button{overflow: visible}button,select{text-transform: none}button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance: button;cursor: pointer}button[disabled],html input[disabled]{cursor: default}button::-moz-focus-inner,input::-moz-focus-inner{border: 0;padding: 0}input{line-height: normal}input[type="checkbox"],input[type="radio"]{box-sizing: border-box;padding: 0}input[type="number"]::-webkit-inner-spin-button,input[type="number"]::-webkit-outer-spin-button{height: auto}input[type="search"]{-webkit-appearance: textfield;box-sizing: content-box}input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration{-webkit-appearance: none}fieldset{border: 1px solid #c0c0c0;margin: 0 2px;padding: 0.35em 0.625em 0.75em}legend{border: 0;padding: 0}textarea{overflow: auto}optgroup{font-weight: bold}table{border-collapse: collapse;border-spacing: 0}td,th{padding: 0}*{box-sizing: border-box}input,select,textarea,button{font: 13px/1.4 Helvetica, arial, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"}body{min-width: 1020px;font: 13px/1.4 Helvetica, arial, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";color: #333;background-color: #fff}a{color: #4183c4;text-decoration: none}a:hover,a:active{text-decoration: underline}hr,.rule{height: 0;margin: 15px 0;overflow: hidden;background: transparent;border: 0;border-bottom: 1px solid #ddd}hr:before,.rule:before{display: table;content: ""}hr:after,.rule:after{display: table;clear: both;content: ""}h1,h2,h3,h4,h5,h6{margin-top: 15px;margin-bottom: 15px;line-height: 1.1}h1{font-size: 30px}h2{font-size: 21px}h3{font-size: 16px}h4{font-size: 14px}h5{font-size: 12px}h6{font-size: 11px}small{font-size: 90%}blockquote{margin: 0}.lead{margin-bottom: 30px;font-size: 20px;font-weight: 300;color: #555}.text-muted{color: #999}.text-danger{color: #bd2c00}.text-emphasized{font-weight: bold;color: #333}ul,ol{padding: 0;margin-top: 0;margin-bottom: 0}ol ol,ul ol{list-style-type: lower-roman}ul ul ol,ul ol ol,ol ul ol,ol ol ol{list-style-type: lower-alpha}dd{margin-left: 0}tt,code{font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;font-size: 12px}pre{margin-top: 0;margin-bottom: 0;font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace}#realtime .status{overflow: visible;position: absolute;top: -5px;left: 0;background: url("/public/images/github-status.png");width: 26px;height: 26px;display: block;margin: 0 5px 0 0}#realtime .up{background-position: 0 0}#realtime .problem{background-position: 0 -53px}#realtime .down{background-position: 0 -26px}.container{max-width: 920px;margin: 0 auto 20px auto}#header{background: #FAFAFA;background: -moz-linear-gradient(#FAFAFA, #EAEAEA);background: -webkit-linear-gradient(#FAFAFA, #EAEAEA);-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#fafafa', endColorstr='#eaeaea')";border-bottom: 1px solid #CACACA;box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4),0 0 10px rgba(0, 0, 0, 0.1)}#markup{padding: 3px}#markup article{padding-top: 30px}.markdown-body{overflow: hidden;font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;font-size: 16px;line-height: 1.6;word-wrap: break-word}.markdown-body>*:first-child{margin-top: 0 !important}.markdown-body>*:last-child{margin-bottom: 0 !important}.markdown-body .absent{color: #c00}.markdown-body .anchor{position: absolute;top: 0;left: 0;display: block;padding-right: 6px;padding-left: 30px;margin-left: -30px}.markdown-body .anchor:focus{outline: none}.markdown-body h1,.markdown-body h2,.markdown-body h3,.markdown-body h4,.markdown-body h5,.markdown-body h6{position: relative;margin-top: 1em;margin-bottom: 16px;font-weight: bold;line-height: 1.4}.markdown-body h1 .octicon-link,.markdown-body h2 .octicon-link,.markdown-body h3 .octicon-link,.markdown-body h4 .octicon-link,.markdown-body h5 .octicon-link,.markdown-body h6 .octicon-link{display: none;color: #000;vertical-align: middle}.markdown-body h1:hover .anchor,.markdown-body h2:hover .anchor,.markdown-body h3:hover .anchor,.markdown-body h4:hover .anchor,.markdown-body h5:hover .anchor,.markdown-body h6:hover .anchor{padding-left: 8px;margin-left: -30px;text-decoration: none}.markdown-body h1:hover .anchor .octicon-link,.markdown-body h2:hover .anchor .octicon-link,.markdown-body h3:hover .anchor .octicon-link,.markdown-body h4:hover .anchor .octicon-link,.markdown-body h5:hover .anchor .octicon-link,.markdown-body h6:hover .anchor .octicon-link{display: inline-block}.markdown-body h1 tt,.markdown-body h1 code,.markdown-body h2 tt,.markdown-body h2 code,.markdown-body h3 tt,.markdown-body h3 code,.markdown-body h4 tt,.markdown-body h4 code,.markdown-body h5 tt,.markdown-body h5 code,.markdown-body h6 tt,.markdown-body h6 code{font-size: inherit}.markdown-body h1{padding-bottom: 0.3em;font-size: 2.25em;line-height: 1.2;border-bottom: 1px solid #eee}.markdown-body h1 .anchor{line-height: 1}.markdown-body h2{padding-bottom: 0.3em;font-size: 1.75em;line-height: 1.225;border-bottom: 1px solid #eee}.markdown-body h2 .anchor{line-height: 1}.markdown-body h3{font-size: 1.5em;line-height: 1.43}.markdown-body h3 .anchor{line-height: 1.2}.markdown-body h4{font-size: 1.25em}.markdown-body h4 .anchor{line-height: 1.2}.markdown-body h5{font-size: 1em}.markdown-body h5 .anchor{line-height: 1.1}.markdown-body h6{font-size: 1em;color: #777}.markdown-body h6 .anchor{line-height: 1.1}.markdown-body p,.markdown-body blockquote,.markdown-body ul,.markdown-body ol,.markdown-body dl,.markdown-body table,.markdown-body pre{margin-top: 0;margin-bottom: 16px}.markdown-body hr{height: 4px;padding: 0;margin: 16px 0;background-color: #e7e7e7;border: 0 none}.markdown-body ul,.markdown-body ol{padding-left: 2em}.markdown-body ul.no-list,.markdown-body ol.no-list{padding: 0;list-style-type: none}.markdown-body ul ul,.markdown-body ul ol,.markdown-body ol ol,.markdown-body ol ul{margin-top: 0;margin-bottom: 0}.markdown-body li>p{margin-top: 16px}.markdown-body dl{padding: 0}.markdown-body dl dt{padding: 0;margin-top: 16px;font-size: 1em;font-style: italic;font-weight: bold}.markdown-body dl dd{padding: 0 16px;margin-bottom: 16px}.markdown-body blockquote{padding: 0 15px;color: #777;border-left: 4px solid #ddd}.markdown-body blockquote>:first-child{margin-top: 0}.markdown-body blockquote>:last-child{margin-bottom: 0}.markdown-body table{display: block;width: 100%;overflow: auto;word-break: normal;word-break: keep-all}.markdown-body table th{font-weight: bold}.markdown-body table th,.markdown-body table td{padding: 6px 13px;border: 1px solid #ddd}.markdown-body table tr{background-color: #fff;border-top: 1px solid #ccc}.markdown-body table tr:nth-child(2n){background-color: #f8f8f8}.markdown-body img{max-width: 100%;box-sizing: border-box}.markdown-body span.frame{display: block;overflow: hidden}.markdown-body span.frame>span{display: block;float: left;width: auto;padding: 7px;margin: 13px 0 0;overflow: hidden;border: 1px solid #ddd}.markdown-body span.frame span img{display: block;float: left}.markdown-body span.frame span span{display: block;padding: 5px 0 0;clear: both;color: #333}.markdown-body span.align-center{display: block;overflow: hidden;clear: both}.markdown-body span.align-center>span{display: block;margin: 13px auto 0;overflow: hidden;text-align: center}.markdown-body span.align-center span img{margin: 0 auto;text-align: center}.markdown-body span.align-right{display: block;overflow: hidden;clear: both}.markdown-body span.align-right>span{display: block;margin: 13px 0 0;overflow: hidden;text-align: right}.markdown-body span.align-right span img{margin: 0;text-align: right}.markdown-body span.float-left{display: block;float: left;margin-right: 13px;overflow: hidden}.markdown-body span.float-left span{margin: 13px 0 0}.markdown-body span.float-right{display: block;float: right;margin-left: 13px;overflow: hidden}.markdown-body span.float-right>span{display: block;margin: 13px auto 0;overflow: hidden;text-align: right}.markdown-body code,.markdown-body tt{padding: 0;padding-top: 0.2em;padding-bottom: 0.2em;margin: 0;font-size: 85%;background-color: rgba(0,0,0,0.04);border-radius: 3px}.markdown-body code:before,.markdown-body code:after,.markdown-body tt:before,.markdown-body tt:after{letter-spacing: -0.2em;content: "\00a0"}.markdown-body code br,.markdown-body tt br{display: none}.markdown-body del code{text-decoration: inherit}.markdown-body pre>code{padding: 0;margin: 0;font-size: 100%;word-break: normal;white-space: pre;background: transparent;border: 0}.markdown-body .highlight{margin-bottom: 16px}.markdown-body .highlight pre,.markdown-body pre{padding: 16px;overflow: auto;font-size: 85%;line-height: 1.45;background-color: #f7f7f7;border-radius: 3px}.markdown-body .highlight pre{margin-bottom: 0;word-break: normal}.markdown-body pre{word-wrap: normal}.markdown-body pre code,.markdown-body pre tt{display: inline;max-width: initial;padding: 0;margin: 0;overflow: initial;line-height: inherit;word-wrap: normal;background-color: transparent;border: 0}.markdown-body pre code:before,.markdown-body pre code:after,.markdown-body pre tt:before,.markdown-body pre tt:after{content: normal}.markdown-body kbd{display: inline-block;padding: 3px 5px;font-size: 11px;line-height: 10px;color: #555;vertical-align: middle;background-color: #fcfcfc;border: solid 1px #ccc;border-bottom-color: #bbb;border-radius: 3px;box-shadow: inset 0 -1px 0 #bbb}.codehilite{background: #ffffff}.codehilite .c{color: #999988;font-style: italic}.codehilite .err{color: #a61717;background-color: #e3d2d2}.codehilite .k{color: #000000;font-weight: bold}.codehilite .o{color: #000000;font-weight: bold}.codehilite .cm{color: #999988;font-style: italic}.codehilite .cp{color: #999999;font-weight: bold}.codehilite .c1{color: #999988;font-style: italic}.codehilite .cs{color: #999999;font-weight: bold;font-style: italic}.codehilite .gd{color: #000000;background-color: #ffdddd}.codehilite .gd .x{color: #000000;background-color: #ffaaaa}.codehilite .ge{color: #000000;font-style: italic}.codehilite .gr{color: #aa0000}.codehilite .gh{color: #999999}.codehilite .gi{color: #000000;background-color: #ddffdd}.codehilite .gi .x{color: #000000;background-color: #aaffaa}.codehilite .go{color: #888888}.codehilite .gp{color: #555555}.codehilite .gs{font-weight: bold}.codehilite .gu{color: #aaaaaa}.codehilite .gt{color: #aa0000}.codehilite .kc{color: #000000;font-weight: bold}.codehilite .kd{color: #000000;font-weight: bold}.codehilite .kp{color: #000000;font-weight: bold}.codehilite .kr{color: #000000;font-weight: bold}.codehilite .kt{color: #445588;font-weight: bold}.codehilite .m{color: #009999}.codehilite .s{color: #d14}.codehilite .na{color: #008080}.codehilite .nb{color: #0086B3}.codehilite .nc{color: #445588;font-weight: bold}.codehilite .no{color: #008080}.codehilite .ni{color: #800080}.codehilite .ne{color: #990000;font-weight: bold}.codehilite .nf{color: #990000;font-weight: bold}.codehilite .nn{color: #555555}.codehilite .nt{color: #000080}.codehilite .nv{color: #008080}.codehilite .ow{color: #000000;font-weight: bold}.codehilite .w{color: #bbbbbb}.codehilite .mf{color: #009999}.codehilite .mh{color: #009999}.codehilite .mi{color: #009999}.codehilite .mo{color: #009999}.codehilite .sb{color: #d14}.codehilite .sc{color: #d14}.codehilite .sd{color: #d14}.codehilite .s2{color: #d14}.codehilite .se{color: #d14}.codehilite .sh{color: #d14}.codehilite .si{color: #d14}.codehilite .sx{color: #d14}.codehilite .sr{color: #009926}.codehilite .s1{color: #d14}.codehilite .ss{color: #990073}.codehilite .bp{color: #999999}.codehilite .vc{color: #008080}.codehilite .vg{color: #008080}.codehilite .vi{color: #008080}.codehilite .il{color: #009999}
-    </style>
-    <style type="text/css">
-      .markdown-body hr{background:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OENDRjNBN0E2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OENDRjNBN0I2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4Q0NGM0E3ODY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4Q0NGM0E3OTY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqqezsUAAAAfSURBVHjaYmRABcYwBiM2QSA4y4hNEKYDQxAEAAIMAHNGAzhkPOlYAAAAAElFTkSuQmCC")}
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <div id="markup">
-        <article id="content" class="markdown-body">
-          <h1>工厂方法模式分为三种：</h1>
-<h2>1 普通工厂模式</h2>
-<p>就是建立一个工厂类，对实现了同一接口的一些类进行实例的创建。首先看下关系图：</p>
-<p><img alt="" src="data:image/png;base64,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"></p>
-<p>举例如下：（我们举一个发送邮件和短信的例子）
-首先，创建二者的共同接口：</p>
-<div class="codehilite"><pre><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Sender</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">Send</span><span class="o">();</span>
-<span class="o">}</span>
-</pre></div>
-
-
-<p>其次，创建实现类：</p>
-<div class="codehilite"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MailSender</span> <span class="kd">implements</span> <span class="n">Sender</span> <span class="o">{</span>
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">Send</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;this is mailsender!&quot;</span><span class="o">);</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</pre></div>
-
-
-<p>最后，建工厂类：</p>
-<div class="codehilite"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SendFactory</span> <span class="o">{</span>
-
-    <span class="kd">public</span> <span class="n">Sender</span> <span class="nf">produce</span><span class="o">(</span><span class="n">String</span> <span class="n">type</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(</span><span class="s">&quot;mail&quot;</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">type</span><span class="o">))</span> <span class="o">{</span>
-            <span class="k">return</span> <span class="k">new</span> <span class="n">MailSender</span><span class="o">();</span>
-        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="s">&quot;sms&quot;</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">type</span><span class="o">))</span> <span class="o">{</span>
-            <span class="k">return</span> <span class="k">new</span> <span class="n">SmsSender</span><span class="o">();</span>
-        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;请输入正确的类型!&quot;</span><span class="o">);</span>
-            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</pre></div>
-
-
-<p>然后我们来测试下</p>
-<div class="codehilite"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FactoryTest</span> <span class="o">{</span>
-
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">SendFactory</span> <span class="n">factory</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SendFactory</span><span class="o">();</span>
-        <span class="n">Sender</span> <span class="n">sender</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="na">produce</span><span class="o">(</span><span class="s">&quot;sms&quot;</span><span class="o">);</span>
-        <span class="n">sender</span><span class="o">.</span><span class="na">Send</span><span class="o">();</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</pre></div>
-
-
-<p>输出：this is sms sender!</p>
-<h2>2 多个工厂方法模式</h2>
-<p>是对普通工厂方法模式的改进，在普通工厂方法模式中，如果传递的字符串出错，则不能正确创建对象，而多个工厂方法模式是提供多个工厂方法，分别创建对象。关系图：
-<img alt="" src="data:image/png;base64,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"><br>
-将上面的代码做下修改，改动下SendFactory类就行，如下：</p>
-<div class="codehilite"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SendFactory</span> <span class="o">{</span>
-
-    <span class="kd">public</span> <span class="n">Sender</span> <span class="nf">produceMail</span><span class="o">(){</span>
-        <span class="k">return</span> <span class="k">new</span> <span class="n">MailSender</span><span class="o">();</span>
-    <span class="o">}</span>
-
-    <span class="kd">public</span> <span class="n">Sender</span> <span class="nf">produceSms</span><span class="o">(){</span>
-        <span class="k">return</span> <span class="k">new</span> <span class="n">SmsSender</span><span class="o">();</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</pre></div>
-
-
-<p>测试类如下：</p>
-<div class="codehilite"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FactoryTest</span> <span class="o">{</span>  
-
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>  
-        <span class="n">SendFactory</span> <span class="n">factory</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SendFactory</span><span class="o">();</span>  
-        <span class="n">Sender</span> <span class="n">sender</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="na">produceMail</span><span class="o">();</span>  
-        <span class="n">sender</span><span class="o">.</span><span class="na">Send</span><span class="o">();</span>  
-    <span class="o">}</span>  
-<span class="o">}</span>  
-</pre></div>
-
-
-<p>输出：this is mailsender!</p>
-<h2>3 静态工厂方法模式</h2>
-<p>将上面的多个工厂方法模式里的方法置为静态的，不需要创建实例，直接调用即可。</p>
-<div class="codehilite"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SendFactory</span> <span class="o">{</span>
-
-    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Sender</span> <span class="nf">produceMail</span><span class="o">(){</span>
-        <span class="k">return</span> <span class="k">new</span> <span class="n">MailSender</span><span class="o">();</span>
-    <span class="o">}</span>
-
-    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Sender</span> <span class="nf">produceSms</span><span class="o">(){</span>
-        <span class="k">return</span> <span class="k">new</span> <span class="n">SmsSender</span><span class="o">();</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">FactoryTest</span> <span class="o">{</span>  
-
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>      
-        <span class="n">Sender</span> <span class="n">sender</span> <span class="o">=</span> <span class="n">SendFactory</span><span class="o">.</span><span class="na">produceMail</span><span class="o">();</span>  
-        <span class="n">sender</span><span class="o">.</span><span class="na">Send</span><span class="o">();</span>  
-    <span class="o">}</span>  
-<span class="o">}</span>
-</pre></div>
-
-
-<p>输出：this is mailsender!</p>
-<p>总体来说，工厂模式适合：凡是出现了大量的产品需要创建，并且具有共同的接口时，可以通过工厂方法模式进行创建。在以上的三种模式中，第一种如果传入的字符串有误，不能正确创建对象，第三种相对于第二种，不需要实例化工厂类，所以，大多数情况下，我们会选用第三种——静态工厂方法模式。</p>
-        </article>
-      </div>
-    </div>
-  </body>
-</html>
+            <h1 id="1-缓存穿透"><a href="#1-缓存穿透" class="headerlink" title="1 缓存穿透"></a>1 缓存穿透</h1><p>如果缓存不命中会到db上查询数据再加载到缓存中，以备后面的请求直接从缓存查询数据，减小db的压力，但是如果db中也不存在的数据，请求每次都会过缓存层，直接访问的db，造成db压力激增，如果恶意攻击的话可能造成db宕机。</p>
+<p>简单的办法是db中没有值就再缓存中存储null，这样请求就不会穿透缓存直接打到db上。但是如果有大量的key都是存储的空值，对于缓存资源来说也是一种浪费。</p>
+<p>另一种方法就是在缓存层之前加一个布隆过滤层，过滤器认为存在的key才访问缓存或db，就能直接减少缓存层的资源浪费</p>
+<h1 id="2-缓存击穿"><a href="#2-缓存击穿" class="headerlink" title="2 缓存击穿"></a>2 缓存击穿</h1><p>高并发场景下，如果一个访问量很大的key过期了，同一时间会有大量的请求访问db，就是缓存击穿，也会对db造成压力激增。</p>
+<p>解决办法是在读取db重新加载缓存的代码上增加互斥锁，避免大量的请求打到db上</p>
+<h1 id="3-缓存雪崩"><a href="#3-缓存雪崩" class="headerlink" title="3 缓存雪崩"></a>3 缓存雪崩</h1><p>高并发场景下，如果某一时刻有大量的key过期或缓存层整个宕机，造成很大量请求直接访问到db，造成db宕机，  这种就称为缓存雪崩。</p>
+<p>这种情况下首先需要保证缓存的高可用，比如redis的cluster主从或sentinel集群。</p>
+<p>其次，缓存的过期时间最好使用随机数作为系数，错开缓存的失效时间，避免大量的key同时失效，从而避免缓存雪崩情况</p>
 
           
         
@@ -1050,7 +524,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-11-22 00:07:05" itemprop="dateModified" datetime="2018-11-22T00:07:05+08:00">2018-11-22</time>
+                <time title="Modified: 2019-04-11 23:20:42" itemprop="dateModified" datetime="2019-04-11T23:20:42+08:00">2019-04-11</time>
               
             
           </span>
@@ -1123,6 +597,7 @@
 <p>名称：jnlp-slave</p>
 <p>镜像：192.168.37.51:80/common/jnlp-slave-maven（安装了jdk、maven的jnlp镜像，需要在启动slave的机器上使用docker pull手动拉取，另外启动slave使用的镜像实际是jenkins/jnlp-slave:alpine，所以需要把自定义镜像tag成jenkins/jnlp-slave:alpine）</p>
 <p><img src="/2018/11/14/基于k8s部署jenkins主从及ci-cd/pod_template.jpg" alt="配置slave pod模板"></p>
+<p><strong><font color="#ff0000" size="4" face="黑体">注意：</font></strong><br>1 jenkins默认是以name为jnlp容器执行build的，如果模板配置的容器名不为jnlp，实际jnlp-slave的pod中会启动两个容器，一个是自己定制的容器一个是官方的容器，所以如果要运行自己的定制镜像，就得把模板中容器的名称设为jnlp<br>2 把“运行命令”和“命令参数”值清空。如果使用容器默认的配置，“运行命令”和“命令参数”都是有值的，但如果使用默认值会导致定制镜像启动的容器不能与master正常通讯，在页面看到的现象是slave一直处于offline状态，但k8s集群中的slave容器是running状态，并且会在重连master失败后销毁重新启动一个slave容器。</p>
 <h4 id="配置slave-pod挂载的卷"><a href="#配置slave-pod挂载的卷" class="headerlink" title="配置slave pod挂载的卷"></a>配置slave pod挂载的卷</h4><p>挂载指定的目录到宿主机，避免重启造成的配置丢失</p>
 <p><strong>maven：</strong></p>
 <p>主机路径：/ceph/maven/repository</p>
@@ -1274,7 +749,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-04-11 22:35:31" itemprop="dateModified" datetime="2019-04-11T22:35:31+08:00">2019-04-11</time>
+                <time title="Modified: 2019-04-11 23:02:52" itemprop="dateModified" datetime="2019-04-11T23:02:52+08:00">2019-04-11</time>
               
             
           </span>
@@ -1459,7 +934,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-10-29 21:18:03" itemprop="dateModified" datetime="2018-10-29T21:18:03+08:00">2018-10-29</time>
+                <time title="Modified: 2019-04-11 23:08:52" itemprop="dateModified" datetime="2019-04-11T23:08:52+08:00">2019-04-11</time>
               
             
           </span>
@@ -2335,6 +1810,326 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/18/hexo-sublime/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Li Cheng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="跬积">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/18/hexo-sublime/" itemprop="url">
+                  sublime3编写hexo
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-07-18 23:31:04" itemprop="dateCreated datePublished" datetime="2018-07-18T23:31:04+08:00">2018-07-18</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-07-19 00:07:48" itemprop="dateModified" datetime="2018-07-19T00:07:48+08:00">2018-07-19</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/hexo/" itemprop="url" rel="index"><span itemprop="name">hexo</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="插件安装"><a href="#插件安装" class="headerlink" title="插件安装"></a>插件安装</h1><h2 id="安装MarkdownEditing"><a href="#安装MarkdownEditing" class="headerlink" title="安装MarkdownEditing"></a>安装MarkdownEditing</h2><p>ctrl+shift+p唤出sublime控制台，输入“package install”，再输入“markdown ed”点击安装MarkdownEditing，插件需要重启才会生效</p>
+<p>除了高亮以外,插件还提供插入图片，超链接等功能<br>快捷键<br>插入图片：win+shift+k<br>插入链接：win+ctrl+k</p>
+<p>并且提供了几个”code snippet”（代码段）</p>
+<p>mdi+tab<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![Alt text](/path/to/img.jpg &quot;Optional title&quot;)</span><br></pre></td></tr></table></figure></p>
+<p>mdl+tab<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[contents](link)</span><br></pre></td></tr></table></figure></p>
+<h2 id="安装hexo插件用于图片上传和显示"><a href="#安装hexo插件用于图片上传和显示" class="headerlink" title="安装hexo插件用于图片上传和显示"></a>安装hexo插件用于图片上传和显示</h2><p>1 把主页配置文件_config.yml 里的post_asset_folder:这个选项设置为true</p>
+<p>2 在你的hexo目录下执行这样一句话<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-asset-image --save</span><br></pre></td></tr></table></figure></p>
+<p>这是下载安装一个可以上传本地图片的插件，来自dalao：<a href="https://github.com/CodeFalling/hexo-asset-image" target="_blank" rel="noopener">dalao的git</a></p>
+<p>3 等待一小段时间后，再运行hexo n “xxxx”来生成md博文时，/source/_posts文件夹内除了xxxx.md文件还有一个同名的文件夹<br>4 最后在xxxx.md中想引入图片时，先把图片复制到xxxx这个文件夹中，然后只需要在xxxx.md中按照markdown的格式引入图片：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![你想输入的替代文字](xxxx/图片名.jpg)</span><br></pre></td></tr></table></figure></p>
+<p>注意： xxxx是这个md文件的名字，也是同名文件夹的名字。只需要有文件夹名字即可，不需要有什么绝对路径。你想引入的图片就只需要放入xxxx这个文件夹内就好了，很像引用相对路径。</p>
+<p>5 最后检查一下，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo g</span><br></pre></td></tr></table></figure></p>
+<p>生成页面后，进入public\2017\02\26\index.html文件中查看相关字段，可以发现，html标签内的语句是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;img src=&quot;2017/02/26/xxxx/图片名.jpg&quot;&gt;</span><br></pre></td></tr></table></figure></p>
+<p>，而不是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;img src=&quot;xxxx/图片名.jpg&quot;&gt;</span><br></pre></td></tr></table></figure></p>
+<p>这很重要，关乎你的网页是否可以真正加载你想插入的图片。</p>
+<h2 id="安装OmniMarkupPreviewer"><a href="#安装OmniMarkupPreviewer" class="headerlink" title="安装OmniMarkupPreviewer"></a>安装OmniMarkupPreviewer</h2><p>同样使用ctrl+shift+p package install 安装OmniMarkupPreviewer<br>重启后生效，可以预览和生成html</p>
+<p>可以在Prefernces-&gt;key bindings 中设置alt+m快捷键，快速预览<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; &quot;keys&quot;: [&quot;alt+m&quot;], &quot;command&quot;: &quot;markdown_preview&quot;, &quot;args&quot;: &#123;&quot;target&quot;: &quot;browser&quot;, &quot;parser&quot;:&quot;markdown&quot;&#125; &#125;</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/18/redis哨兵集群搭建/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Li Cheng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="跬积">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/18/redis哨兵集群搭建/" itemprop="url">
+                  redis哨兵集群搭建
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-07-18 23:09:50" itemprop="dateCreated datePublished" datetime="2018-07-18T23:09:50+08:00">2018-07-18</time>
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
@@ -2382,7 +2177,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-count">13</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

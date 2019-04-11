@@ -122,7 +122,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/11/14/基于k8s部署jenkins主从及ci-cd/gloable.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/11/14/基于k8s部署jenkins主从及ci-cd/gloadtools.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/11/14/基于k8s部署jenkins主从及ci-cd/jnlp_proxy.jpg">
-<meta property="og:updated_time" content="2018-11-21T16:07:05.158Z">
+<meta property="og:updated_time" content="2019-04-11T15:20:42.810Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于k8s部署jenkins主从及ci&#x2F;cd">
 <meta name="twitter:description" content="jenkins动态slave配置1、镜像准备1.1jenkins master Dockerfile123456789101112131415FROM jenkins/jenkins:latestENV MAVEN_VERSION 3.5.4ENV MAVEN_HOME /opt/maven/apache-maven-$&amp;#123;MAVEN_VERSION&amp;#125;# build javaCO">
@@ -366,7 +366,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-11-22 00:07:05" itemprop="dateModified" datetime="2018-11-22T00:07:05+08:00">2018-11-22</time>
+                <time title="Modified: 2019-04-11 23:20:42" itemprop="dateModified" datetime="2019-04-11T23:20:42+08:00">2019-04-11</time>
               
             
           </span>
@@ -437,6 +437,7 @@
 <p>名称：jnlp-slave</p>
 <p>镜像：192.168.37.51:80/common/jnlp-slave-maven（安装了jdk、maven的jnlp镜像，需要在启动slave的机器上使用docker pull手动拉取，另外启动slave使用的镜像实际是jenkins/jnlp-slave:alpine，所以需要把自定义镜像tag成jenkins/jnlp-slave:alpine）</p>
 <p><img src="/2018/11/14/基于k8s部署jenkins主从及ci-cd/pod_template.jpg" alt="配置slave pod模板"></p>
+<p><strong><font color="#ff0000" size="4" face="黑体">注意：</font></strong><br>1 jenkins默认是以name为jnlp容器执行build的，如果模板配置的容器名不为jnlp，实际jnlp-slave的pod中会启动两个容器，一个是自己定制的容器一个是官方的容器，所以如果要运行自己的定制镜像，就得把模板中容器的名称设为jnlp<br>2 把“运行命令”和“命令参数”值清空。如果使用容器默认的配置，“运行命令”和“命令参数”都是有值的，但如果使用默认值会导致定制镜像启动的容器不能与master正常通讯，在页面看到的现象是slave一直处于offline状态，但k8s集群中的slave容器是running状态，并且会在重连master失败后销毁重新启动一个slave容器。</p>
 <h4 id="配置slave-pod挂载的卷"><a href="#配置slave-pod挂载的卷" class="headerlink" title="配置slave pod挂载的卷"></a>配置slave pod挂载的卷</h4><p>挂载指定的目录到宿主机，避免重启造成的配置丢失</p>
 <p><strong>maven：</strong></p>
 <p>主机路径：/ceph/maven/repository</p>
@@ -523,8 +524,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/11/22/design-patterns-create-factory_181122000450/" rel="prev" title="">
-                 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/04/11/cache/" rel="prev" title="缓存穿透、缓存击穿和缓存雪崩">
+                缓存穿透、缓存击穿和缓存雪崩 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -595,7 +596,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-count">13</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

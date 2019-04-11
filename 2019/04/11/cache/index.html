@@ -116,7 +116,7 @@
 <meta property="og:site_name" content="跬积">
 <meta property="og:description" content="1 缓存穿透如果缓存不命中会到db上查询数据再加载到缓存中，以备后面的请求直接从缓存查询数据，减小db的压力，但是如果db中也不存在的数据，请求每次都会过缓存层，直接访问的db，造成db压力激增，如果恶意攻击的话可能造成db宕机。 简单的办法是db中没有值就再缓存中存储null，这样请求就不会穿透缓存直接打到db上。但是如果有大量的key都是存储的空值，对于缓存资源来说也是一种浪费。 另一种方法就">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-04-11T14:52:22.033Z">
+<meta property="og:updated_time" content="2019-04-11T15:06:32.425Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="缓存穿透、缓存击穿和缓存雪崩">
 <meta name="twitter:description" content="1 缓存穿透如果缓存不命中会到db上查询数据再加载到缓存中，以备后面的请求直接从缓存查询数据，减小db的压力，但是如果db中也不存在的数据，请求每次都会过缓存层，直接访问的db，造成db压力激增，如果恶意攻击的话可能造成db宕机。 简单的办法是db中没有值就再缓存中存储null，这样请求就不会穿透缓存直接打到db上。但是如果有大量的key都是存储的空值，对于缓存资源来说也是一种浪费。 另一种方法就">
@@ -342,7 +342,7 @@
                 
               
 
-              <time title="Created: 2019-04-11 22:31:33 / Modified: 22:52:22" itemprop="dateCreated datePublished" datetime="2019-04-11T22:31:33+08:00">2019-04-11</time>
+              <time title="Created: 2019-04-11 22:31:33 / Modified: 23:06:32" itemprop="dateCreated datePublished" datetime="2019-04-11T22:31:33+08:00">2019-04-11</time>
             
 
             
@@ -398,15 +398,15 @@
       
 
       
-        <h1 id="1-缓存穿透"><a href="#1-缓存穿透" class="headerlink" title="1 缓存穿透"></a>1 缓存穿透</h1><pre><code>如果缓存不命中会到db上查询数据再加载到缓存中，以备后面的请求直接从缓存查询数据，减小db的压力，但是如果db中也不存在的数据，请求每次都会过缓存层，直接访问的db，造成db压力激增，如果恶意攻击的话可能造成db宕机。
-简单的办法是db中没有值就再缓存中存储null，这样请求就不会穿透缓存直接打到db上。但是如果有大量的key都是存储的空值，对于缓存资源来说也是一种浪费。
-另一种方法就是在缓存层之前加一个布隆过滤层，过滤器认为存在的key才访问缓存或db，就能直接减少缓存层的资源浪费
-</code></pre><h1 id="2-缓存击穿"><a href="#2-缓存击穿" class="headerlink" title="2 缓存击穿"></a>2 缓存击穿</h1><pre><code>高并发场景下，如果一个访问量很大的key过期了，同一时间会有大量的请求访问db，就是缓存击穿，也会对db造成压力激增。
-解决办法是在读取db重新加载缓存的代码上增加互斥锁，避免大量的请求打到db上
-</code></pre><h1 id="3-缓存雪崩"><a href="#3-缓存雪崩" class="headerlink" title="3 缓存雪崩"></a>3 缓存雪崩</h1><pre><code>高并发场景下，如果某一时刻有大量的key过期或缓存层整个宕机，造成很大量请求直接访问到db，造成db宕机，这种就称为缓存雪崩。
-这种情况下首先需要保证缓存的高可用，比如redis的cluster主从或sentinel集群。
-其次，缓存的过期时间最好使用随机数作为系数，错开缓存的失效时间，避免大量的key同时失效，从而避免缓存雪崩情况
-</code></pre>
+        <h1 id="1-缓存穿透"><a href="#1-缓存穿透" class="headerlink" title="1 缓存穿透"></a>1 缓存穿透</h1><p>如果缓存不命中会到db上查询数据再加载到缓存中，以备后面的请求直接从缓存查询数据，减小db的压力，但是如果db中也不存在的数据，请求每次都会过缓存层，直接访问的db，造成db压力激增，如果恶意攻击的话可能造成db宕机。</p>
+<p>简单的办法是db中没有值就再缓存中存储null，这样请求就不会穿透缓存直接打到db上。但是如果有大量的key都是存储的空值，对于缓存资源来说也是一种浪费。</p>
+<p>另一种方法就是在缓存层之前加一个布隆过滤层，过滤器认为存在的key才访问缓存或db，就能直接减少缓存层的资源浪费</p>
+<h1 id="2-缓存击穿"><a href="#2-缓存击穿" class="headerlink" title="2 缓存击穿"></a>2 缓存击穿</h1><p>高并发场景下，如果一个访问量很大的key过期了，同一时间会有大量的请求访问db，就是缓存击穿，也会对db造成压力激增。</p>
+<p>解决办法是在读取db重新加载缓存的代码上增加互斥锁，避免大量的请求打到db上</p>
+<h1 id="3-缓存雪崩"><a href="#3-缓存雪崩" class="headerlink" title="3 缓存雪崩"></a>3 缓存雪崩</h1><p>高并发场景下，如果某一时刻有大量的key过期或缓存层整个宕机，造成很大量请求直接访问到db，造成db宕机，  这种就称为缓存雪崩。</p>
+<p>这种情况下首先需要保证缓存的高可用，比如redis的cluster主从或sentinel集群。</p>
+<p>其次，缓存的过期时间最好使用随机数作为系数，错开缓存的失效时间，避免大量的key同时失效，从而避免缓存雪崩情况</p>
+
       
     </div>
 
@@ -439,8 +439,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/11/22/design-patterns-create-factory_181122000452/" rel="next" title="">
-                <i class="fa fa-chevron-left"></i> 
+              <a href="/2018/11/14/基于k8s部署jenkins主从及ci-cd/" rel="next" title="基于k8s部署jenkins主从及ci/cd">
+                <i class="fa fa-chevron-left"></i> 基于k8s部署jenkins主从及ci/cd
               </a>
             
           </div>
@@ -517,7 +517,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-count">13</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
