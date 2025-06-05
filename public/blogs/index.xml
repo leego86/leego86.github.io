@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blogs on 哈利露牙</title>
+    <link>https://leego86.github.io/blogs/</link>
+    <description>Recent content in Blogs on 哈利露牙</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 05 Jun 2025 21:01:20 +0800</lastBuildDate>
+    <atom:link href="https://leego86.github.io/blogs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Test2</title>
+      <link>https://leego86.github.io/blogs/test2/</link>
+      <pubDate>Thu, 05 Jun 2025 16:57:44 +0800</pubDate>
+      <guid>https://leego86.github.io/blogs/test2/</guid>
+      <description>&lt;ul&gt;&#xA;&lt;li&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+    </item>
+  </channel>
+</rss>
